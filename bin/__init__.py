@@ -4,7 +4,7 @@ from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 
 import sys
-sys.path.append('/models')
+path.append(getcwd() + "\\models")
 from models.models  import DBSession, Base
 
 def main(global_config, **settings):
