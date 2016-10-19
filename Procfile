@@ -1,1 +1,1 @@
-web:bash ./run
+web: bash ./run
