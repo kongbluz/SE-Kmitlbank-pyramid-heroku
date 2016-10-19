@@ -3,11 +3,8 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 
-import sys
-from os import getcwd
 
-sys.path.append(getcwd() + "\\models")
-from models  import DBSession, Base
+from .models.models  import DBSession, Base
 
 def main(global_config, **settings):
 
