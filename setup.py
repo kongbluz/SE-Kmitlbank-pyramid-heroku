@@ -11,6 +11,7 @@ requires = [
     'colander',
     'deform',
     'paste',
+    'waitress',
 ]
 
 setup(name = 'bin',

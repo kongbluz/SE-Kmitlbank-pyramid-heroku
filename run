@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 python setup.py develop
-pserve production.ini
+python runapp.py
