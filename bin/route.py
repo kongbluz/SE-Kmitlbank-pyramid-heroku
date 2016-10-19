@@ -1,0 +1,18 @@
+def includeme(config):
+    config.add_static_view(name='css', path='bin:static/css', cache_max_age=3600)
+    config.add_static_view(name='images', path='bin:static/images', cache_max_age=3600)
+    config.add_static_view(name='js', path='bin:static/js', cache_max_age=3600)
+    config.add_route('home','/')
+    config.add_route('login','/login')
+    config.add_route('logout','/logout')
+    config.add_route('service','/service')
+    config.add_route('contact','/contact')
+    config.add_route('about','/about')
+    config.add_route('register','/register')
+    config.add_route('success', '/register/success')
+    config.add_route('accountregister','/accountregister')
+
+    config.add_route('profile','/profile')
+    config.add_route('transfer','/transfer')
+    config.add_route('loan','/loan')
+    config.add_route('transaction', '/transaction')

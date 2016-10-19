@@ -1,0 +1,43 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="content">
+        <article>            <!-- box begin --> <!-- use -->
+          <div class="box">
+            <div class="border-top">
+              <div class="border-right">
+                <div class="border-bot">
+                  <div class="border-left">
+                    <div class="left-top-corner">
+                      <div class="right-top-corner">
+                        <div class="right-bot-corner">
+                          <div class="left-bot-corner">
+                            <div class="inner">
+                              <h2>Transactions</h2>
+                              <table border="1" align="center" width="90%" cellpadding="10"  bordercolor="black">
+                                <tr align="center">
+                                  <th>Date Time</th>
+                                  <th>Type</th>
+                                  <th>Money</th>
+                                  <th>Balance</th>
+                                  <th>Detail</th>
+                                </tr>
+                                <tr align="center" tal:repeat="thistransaction alltransaction">
+                                  <td width="150">${thistransaction.datetime}</td>
+                                  <td width="20">${thistransaction.types}</td>
+                                  <td align="right" width="80">${thistransaction.money}</td>
+                                  <td align="right" width="80">${thistransaction.balance}</td>
+                                  <td >${thistransaction.detail}</td>
+                                </tr>
+                              </table>
+                           </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>            <!-- box end --> <!-- not use -->
+  </div>
+</div>

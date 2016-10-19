@@ -1,0 +1,40 @@
+<div metal:use-macro="view.index">
+  <div metal:fill-slot="content">
+ <!-- use -->
+    <div id="container">            <!-- box begin -->
+            <div class="box">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <h2>About Us</h2>
+                                <ul class="list1">
+                                <span id="first">ประวัติความเป็นมา</span><br><br>
+                                  <li>KMITL Bank ก่อตั้งเมื่อวันที่ 1 สิงหาคม พ.ศ.2559 เพื่อประกอบการเรียนวิชา Software Engineering ภาคเรียนที่ 1 ปีการศึกษา 2559</li>
+                                  <br>
+                                <span id="first">จัดทำโดย</span><br><br>
+                                  <li>นายพงศธร วานิชชินชัย</li>
+                                  <li>นางสาวพรฉาย อภิชาติพันธุ์</li>
+                                  <li>นางสาวสิรภัทร ติยะสุวรรณ</li>
+                                  <li>นายสุทธิชัย พงศานนท์</li>
+                                  <li>นายอรรถสิทธิ์ สินธัญญาธรรม</li><br><br><br><br><br><br><br><br><br>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            <!-- box end --> <!-- not use -->
+  <!-- footer -->
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,36 @@
+<div metal:use-macro="view.index">
+  <div metal:fill-slot="content">
+ <!-- use -->
+    <div id="container">              <!-- box begin -->
+            <div class="box">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <br><br><br>
+                                  <h4>Subscribed successfully</h4>
+                                  <h4> Your username is : ${username} </h4>
+                                <br>
+                                  <h4><a href="${request.route_url('home')}"> back to the home</a></h4>
+                                <br><br><br>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            <!-- box end --><!-- not  use -->
+    </div>
+  </div>
+
+  <script type="text/javascript" src="${request.static_url('bin:static/js/regissubmit.js')}"></script>
+
+</div>
+</div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang ="en" metal:define-macro="index">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title> KMITL Bank | ${title} </title>
+    <link rel = "stylesheet" type="text/css" href="${request.static_url('bin:static/css/style.css')}" media= "screen">
+    <script type="text/javascript">
+    function mouseIn(objEm) { objEm.style.color="#45cbf0"; }
+    function mouseOut(objEm) { objEm.style.color="white"; }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+    <header id="header">
+      <div class="logo"><img src="${request.static_url('bin:static/images/logo.png')}" width="100%"/></div>
+    </header>
+    <nav id="nav">
+        <div class="nav-box">
+          <div class="left">
+            <div class="right">
+              <ul>
+                <li><a href="${request.route_url('home')}"  class="first"><em><b>Home</b></em></a></li>
+                <li><a href="${request.route_url('service')}" ><em><b>Services</b></em></a></li>
+                <li><a href="${request.route_url('about')}" ><em><b>About</b></em></a></li>
+                <li><a href="${request.route_url('contact')}" ><em><b>Contact</b></em></a></li>
+                <li><a href="${request.route_url('register')}" class="last" ><em><b>Register</b></em></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="banner">
+          <img src="${request.static_url('bin:static/images/banner.png')}" width="100%"/>
+        </div>
+    </nav>
+    </div>
+    <div metal:define-slot="content">
+    </div>
+  <!-- footer -->
+    <footer id="footer">
+        <ul class="nav">
+          <li><a href="index.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)" >Home</a>|</li>
+          <li><a href="service.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Service</a>|</li>
+          <li><a href="about.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">About</a>|</li>
+          <li><a href="contact.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Contact</a>|</li>
+          <li><a href="register.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Register</a></li>
+        </ul>
+       <div class="wrapper">
+          <div class="fleft">Copyright &copy; 2016 <a href="https://www.ce.kmitl.ac.th">CE-KMITL</a>. All Rights Reserved</div>
+          <div class="fright">Designed by Thunder - <a href="https://www.facebook.com/thunder.guyy">Contact</a></div>
+      </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="content">
+
+    <article>            <!-- box begin --> <!-- use -->
+        <div class="box">
+          <div class="border-top">
+            <div class="border-right">
+              <div class="border-bot">
+                <div class="border-left">
+                  <div class="left-top-corner">
+                    <div class="right-top-corner">
+                      <div class="right-bot-corner">
+                        <div class="left-bot-corner">
+                          <div class="inner">
+                            <h2>Take on Loan</h2>
+                              <li>
+                                <form>
+                                   Money Loan :
+                                   <input type="text" name="Money" placeholder="$.00">
+                                </form>
+                              </li>
+                              <li><p>
+                                <form class="sec-accept" name="form1" onSubmit ="JavaScript:return fncSubmit();">
+                                  <div class="box3">
+                                    <div class="border-top">
+                                      <div class="border-right">
+                                        <div class="border-bot">
+                                          <div class="border-left">
+                                            <div class="left-top-corner">
+                                              <div class="right-top-corner">
+                                                <div class="right-bot-corner">
+                                                  <div class="left-bot-corner">
+                                                    <div class="inner">
+                                                      1.เงินที่ผู้ให้กู้ยืมจ่ายให้แก่ผู้กู้ยืม ให้ถือว่าผู้กู้ยืมได้รับเงินแล้ว นับแต่วันที่ผู้ให้กู้ยืมจ่ายเข้าบัญชีเงินฝากออมทรัพย์<br>
+                                                      2.ผู้กู้ยืมตกลงชำระเงินกู้ยืมพร้อมทั้งดอกเบี้ยร้อยละ 1 ต่อปี<br>
+                                                      3.หากผู้ให้กู้ยืมเห็นสมควรจะให้ผู้กู้ยืมเปลี่ยนตัวผู้ค้ำประกัน ผู้กู้ยืมจะต้องปฏิบัติทันที<br><p>
+                                      <input type="checkbox" value="Y" name="chk1" id="chk1"> I accept everythings.
+                                                    </div></div></div></div></div></div></div></div></div></div>
+                                                    <li>
+                                                        <button  class="button2" ><em><b>Submit</b></em></button>
+                                                    </li>
+                                </form>
+                              </li>
+
+                              <br><br><br><br><br><br><br><br><br><br>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>            <!-- box end --> <!-- not use -->
+
+    <script language="javascript" type="text/javascript" src="js/loansubmit.js"></script>
+
+ </div>
+</div>

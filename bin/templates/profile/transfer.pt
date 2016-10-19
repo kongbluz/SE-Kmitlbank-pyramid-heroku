@@ -1,0 +1,57 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="content">
+        <article>            <!-- box begin --> <!-- use -->
+            <div class="box">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <h2>Transfer</h2>
+                                <ul class="list1">
+                                  <p> ${message} </p>
+                                  <li><b>Account ID   :</b> ${accountid} </li>
+                                  <li><b>Balance      :</b> ${balance} </li>
+                                  <form method="post">
+
+                                    <input type="hidden" name="myaccount"
+                                           value="${accountid}"/>
+                                    <input type="hidden" name="mybalance"
+                                            value="${balance}"/>
+                                  <li>Select Bank :
+                                    <select name="selectbank" >
+                                       <option value="">please select bank</option>
+                                       <option value="KMITLbank">KMITL Bank</option>
+                                    </select>
+                                  </li>
+                                  <li>
+                                       Account Number :
+                                       <input type="text" name="tranferaccount" placeholder="please Enter Acc.Number">
+                                  </li>
+                                  <li>
+                                       Money Transfers :
+                                       <input type="text" name="money" placeholder="$.00">
+                                  </li>
+                                  <li>
+                                      <input type="submit" class="button2" name="transfer.submitted" value="Submit">
+                                  </li>
+                                  </form>
+
+                                  <br><br><br><br><br><br><br><br><br><br>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </article>            <!-- box end --><!-- not use -->
+ </div>
+</div>

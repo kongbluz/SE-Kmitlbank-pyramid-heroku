@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang ="en" metal:define-macro="layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title> KMITL Bank | ${title} </title>
+    <link rel = "stylesheet" type="text/css" href="css/page.css" media= "screen">
+    <link rel = "stylesheet" type="text/css" href="css/calendar.css" >
+</head>
+
+<body>
+    <div id="container">
+    <header id="header">
+      <div class="logo"><img src="images/logo.png"/ width="100%"/></div>
+    </header>
+    <nav id="nav">
+      <div class="banner">
+        <img src="images/banner2.png"/ width="100%"/>
+      </div>
+    </nav>
+
+    <section id="section">
+        <article>            <!-- box2 begin -->
+            <div class="box2">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <ul class="list1">
+                                  <li>Select Account Bank :
+                                    <form method="post">
+                                      <select name = "selector">
+                                         <option  value = "">please select account bank</option>
+                                         <option tal:repeat="thisaccountid allaccountid" value="${thisaccountid.BankAccount_id}" > ${thisaccountid.BankAccount_id} </option>
+                                      </select>
+                                      <input type="submit" name="form.submitted" value="submit"/>
+                                    </form>
+                                  </li>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </article>            <!-- box end 2 -->
+        <div metal:define-slot="content">
+        </div>
+
+    </section>
+
+    <aside id="aside">
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('logout')}"><em><b>Log Out</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('profile')}"><em><b>Profile</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('transfer')}"><em><b>Transfer</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('loan')}" class="first"><em><b>Loan</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('transaction')}" class="first"><em><b>Transaction</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+
+      <div class="month">
+        <ul>
+          <li> <p id="demo1"><p id="demo"></p></p> </li>
+        </ul>
+      </div>
+
+      <ul class="weekdays">
+       <li>Su</li>
+       <li>Mo</li>
+       <li>Tu</li>
+       <li>We</li>
+       <li>Th</li>
+       <li>Fr</li>
+       <li>Sa</li>
+      </ul>
+
+      <ul class="days">
+        <p id="demo2"></p>
+      </ul>
+    </aside>
+  <!-- footer -->
+    <footer id="footer">
+       <div class="wrapper">
+          <div class="fleft">Copyright &copy; 2016 <a href="https://www.ce.kmitl.ac.th">CE-KMITL</a>. All Rights Reserved</div>
+          <div class="fright">Designed by Thunder - <a href="https://www.facebook.com/thunder.guyy">Contact</a></div>
+      </div>
+   </footer>
+   <!-- javascript calendar -->
+      <script language="javascript" type="text/javascript" src="js/calender.js">
+
+      </script>
+
+</body>
+</html>

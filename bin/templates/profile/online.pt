@@ -1,0 +1,55 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="content">
+
+        <article>            <!-- box begin -->
+            <div class="box">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <h2>Profile</h2>
+                                <ul class="list1">
+                                  <br>
+                                  <li><b>Name :</b> ${name}</li>
+                                  <li><b>Account Name :</b> ${accountname}</li>
+                                  <li><b>Account ID   :</b> ${accountid}</li>
+                                </ul>
+                                <li>
+                                 <form class="sec-accept">
+                                  <div class="box3">
+                                    <div class="border-top">
+                                      <div class="border-right">
+                                        <div class="border-bot">
+                                          <div class="border-left">
+                                            <div class="left-top-corner">
+                                              <div class="right-top-corner">
+                                                <div class="right-bot-corner">
+                                                  <div class="left-bot-corner">
+                                                    <div class="inner">
+                                                      <li><b>Balance :</b> ${balance}</li><br>
+                                                      <li><b>Debt :</b> ${loan}</li><br>
+                                                      <li><div class="form-register">
+                                                        <form class="regist-form" action="#" method="post">
+                                                          <input type="text" placeholder="OTP password"/>
+                                                          <button>payment</button>
+                                                        </form></div></li>
+                                                    </div></div></div></div></div></div></div></div></div></div>
+                                <form></li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>            <!-- box end -->
+  </div>
+</div>

@@ -1,0 +1,5 @@
+      [paste.app_factory]
+      main = bin:main
+      [console_scripts]
+      initialize_bin_db = bin.scripts.initializedb:main
+      

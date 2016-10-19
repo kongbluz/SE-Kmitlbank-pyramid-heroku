@@ -1,0 +1,9 @@
+pyramid
+pyramid_tm
+pyramid_chameleon
+passlib
+sqlalchemy
+bcrypt
+zope.sqlalchemy
+colander
+deform
