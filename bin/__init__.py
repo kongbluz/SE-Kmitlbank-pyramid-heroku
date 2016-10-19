@@ -2,7 +2,9 @@ from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
+
 import sys
+from os import getcwd
 
 sys.path.append(getcwd() + "\\models")
 from models  import DBSession, Base
