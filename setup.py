@@ -12,6 +12,7 @@ requires = [
     'deform',
     'paste',
     'waitress',
+    'psycopg2',
 ]
 
 setup(name = 'bin',
