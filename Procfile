@@ -1,1 +1,1 @@
-web: ./runapp.py
+web: chmod +x ./runapp.py
