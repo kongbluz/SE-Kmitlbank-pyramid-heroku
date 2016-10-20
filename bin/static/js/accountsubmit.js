@@ -1,10 +1,10 @@
 function fncSubmit() {
-  if(document.form1.nationid.value == "" || isNaN(this.value) ) {
+  if(document.form1.nationid.value == "") {
     alert('Please input Nation ID and input ');
     document.form1.nationid.focus();
     return false;
   }
-  else if(document.form1.phonenumber.value == "" || form1.phonenumber.length != 10)  {
+  else if(document.form1.phonenumber.value == "")  {
     alert('Please input phone number');
     document.form1.phonenumber.focus();
     return false;
