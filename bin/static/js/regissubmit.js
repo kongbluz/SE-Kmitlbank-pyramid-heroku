@@ -1,10 +1,10 @@
 function fncSubmit() {
-  if(document.form1.username.value == "" || form1.username.value.length < 6 || form1.username.value.length > 12){
+  if(document.form1.txtusername.value == "" || form1.txtusername.value.length < 6 || form1.txtusername.value.length > 12){
     alert('Please input Username and have 6 - 12 characters');
     document.form1.username.focus();
     return false;
   }
-  else if(document.form1.password.value == "")  {
+  else if(document.form1.txtpassword.value == "")  {
     alert('Please input Password');
     document.form1.password.focus();
     return false;
@@ -14,7 +14,7 @@ function fncSubmit() {
     document.form1.txtConPassword.focus();
     return false;
   }
-  else if(document.form1.password.value != document.form1.txtConPassword.value)  {
+  else if(document.form1.txtpassword.value != document.form1.txtConPassword.value)  {
     alert('Confirm Password Not Match');
     document.form1.txtConPassword.focus();
     return false;
@@ -24,7 +24,7 @@ function fncSubmit() {
     document.form1.accountname.focus();
     return false;
   }
-  else if(document.form1.accountid.value == "")  {
+  else if(document.form1.txtaccountid.value == "")  {
     alert('Please input Account Num');
     document.form1.accountid.focus();
     return false;

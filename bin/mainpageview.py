@@ -77,11 +77,11 @@ class View(object):
             nationid = ''
 
         if 'form.submitted' in request.params:
-            username    = request.params['username']
-            password    = request.params['password']
-            accountname = request.params['accountname']
-            accountid   = request.params['accountid']
-            nationid    = request.params['nationid']
+            username    = request.params['txtusername']
+            password    = request.params['txtpassword']
+            accountname = request.params['txtaccountname']
+            accountid   = request.params['txtaccountid']
+            nationid    = request.params['txtnationid']
 
             costumer = DBSession.query(Costumer).filter(Costumer.nationid == nationid).first()
             bankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()

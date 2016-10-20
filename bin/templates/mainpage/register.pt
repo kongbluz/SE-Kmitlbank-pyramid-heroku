@@ -17,12 +17,12 @@
                                 <div class="form-register">
                                   <form class="regist-form" action="${url}" method="post" name="form1" OnSubmit="JavaScript:return fncSubmit();">
                                     <p> ${message} </p>
-                                    Username : <input type="text" placeholder="username" name="username" value="${username}"/><br>
-                                    Password : <input type="password" maxlength="15" placeholder="password" id="txtPassword" name="password"/><br>
-                                    Repassword : <input type="password" maxlength="15" placeholder="repassword"  id="txtConPassword" name="txtConPassword"/><br>
-                                    Account Name : <input type="text" placeholder="accountName" name="accountname" value="${accountname}"/><br>
-                                    Account Number : <input type="text" placeholder="accountNo" name="accountid" value="${accountid}" /><br>
-                                    Nation ID : <input type="text" placeholder="xxxxxxxxxxxxx" maxlength="13" name="nationid" value="${nationid}" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}"/><br>
+                                    Username : <input type="text" placeholder="username" name="txtusername" value="${username}"/><br>
+                                    Password : <input type="password" maxlength="15" placeholder="txtpassword" id="txtPassword" name="password"/><br>
+                                    Repassword : <input type="password" maxlength="15" placeholder="txtrepassword"  id="txtConPassword" name="txtConPassword"/><br>
+                                    Account Name : <input type="text" placeholder="accountName" name="txtaccountname" value="${accountname}"/><br>
+                                    Account Number : <input type="text" placeholder="accountNo" name="txtaccountid" value="${accountid}" /><br>
+                                    Nation ID : <input type="text" placeholder="xxxxxxxxxxxxx" maxlength="13" name="txtnationid" value="${nationid}" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}"/><br>
                                     <button name="form.submitted" value="Submit">Submit</button>
                                     <p class="message">Not Account? <a href="${request.route_url('accountregister')}">Create an account</a></p>
                                   </form>
