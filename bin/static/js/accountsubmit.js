@@ -1,6 +1,6 @@
 function fncSubmit() {
   if(document.form1.nationid.value == "") {
-    alert('Please input Nation ID and input ');
+    alert('Please input Nation ID ');
     document.form1.nationid.focus();
     return false;
   }
