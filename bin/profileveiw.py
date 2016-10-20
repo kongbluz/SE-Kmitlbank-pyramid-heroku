@@ -94,6 +94,10 @@ class ProfileVeiw(object):
                 message = 'itn''t money'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
+            if money < 0 :
+                message = 'You don''t have negative money'
+                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
+
             bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
             if bank.balance - money < 0 :
                 message = 'You don''t have money enough'
