@@ -14,6 +14,7 @@ from pyramid.view import (
     forbidden_view_config
     )
 import datetime
+from .scripts.genOTP import GETOTP
 
 class ProfileVeiw(object):
     def __init__(self, request):
@@ -44,7 +45,30 @@ class ProfileVeiw(object):
                 loan        = bank.loan
         else:
             accountid = ''
-        return dict(title = 'Profile', name = name, accountname = accountname,
+
+        if accountid is not None:
+            ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
+            if ownaccount is not None:
+                otppassword = ownaccount.otppassword
+            else :
+                otppassword = ''
+
+            if 'OTP.submitted' in request.params :
+                if ownaccount is not None:
+                    if ownaccount.otppassword is None:
+                        ownaccount.otppassword = GETOTP()
+                        otppassword = ownaccount.otppassword
+                        return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
+                                balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
+                                url = request.application_url + '/profile'
+                                )
+                    else :
+                        otppassword = ownaccount.otppassword
+                else:
+                    otppassword = ''
+
+
+        return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
                     balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
                     url = request.application_url + '/profile'
                     )

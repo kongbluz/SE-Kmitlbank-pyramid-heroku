@@ -33,13 +33,13 @@
                                                     <div class="inner">
                                                       <li><b>Balance :</b> ${balance}</li><br>
                                                       <li><b>Debt :</b> ${loan}</li><br>
-                                                      <li><div class="form-register">
-                                                        <form class="regist-form" action="#" method="post">
-                                                          <input type="text" placeholder="OTP password"/>
-                                                          <button>payment</button>
-                                                        </form></div></li>
+                                                      <li><b>OTPpassword : </b> ${otppassword}</li>
+                                                      <div tal:condition="otppassword" class="form-register">
+                                                        <form method="post" action="${url}">
+                                                          <button type="submit" class="button2" name="OTP.submitted" value="Get OTP"> GETOTP</button>
+                                                        </form></div>
                                                     </div></div></div></div></div></div></div></div></div></div>
-                                <form></li>
+                                <form>
                             </div>
                           </div>
                         </div>
