@@ -51,7 +51,7 @@ class ProfileVeiw(object):
             if ownaccount is not None:
                 otppassword = ownaccount.otppassword
             else :
-                otppassword = ''
+                otppassword = None
 
             if 'OTP.submitted' in request.params :
                 if ownaccount is not None:
@@ -65,7 +65,7 @@ class ProfileVeiw(object):
                     else :
                         otppassword = ownaccount.otppassword
                 else:
-                    otppassword = ''
+                    otppassword = None
 
 
         return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,

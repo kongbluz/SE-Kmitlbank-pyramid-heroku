@@ -34,7 +34,7 @@
                                                       <li><b>Balance :</b> ${balance}</li><br>
                                                       <li><b>Debt :</b> ${loan}</li><br>
                                                       <li><b>OTPpassword : </b> ${otppassword}</li>
-                                                      <div tal:condition="otppassword" class="form-register">
+                                                      <div tal:condition="balance and not otppassword" class="form-register">
                                                         <form method="post" action="${url}">
                                                           <button type="submit" class="button2" name="OTP.submitted" value="Get OTP"> GETOTP</button>
                                                         </form></div>
