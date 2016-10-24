@@ -13,6 +13,7 @@ requires = [
     'paste',
     'waitress',
     'psycopg2',
+    'simplejson',
 ]
 
 setup(name = 'bin',

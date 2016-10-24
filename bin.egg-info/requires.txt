@@ -10,3 +10,4 @@ deform
 paste
 waitress
 psycopg2
+simplejson

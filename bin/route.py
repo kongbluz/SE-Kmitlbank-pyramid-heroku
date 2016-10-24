@@ -16,3 +16,5 @@ def includeme(config):
     config.add_route('transfer','/transfer')
     config.add_route('loan','/loan')
     config.add_route('transaction', '/transaction')
+
+    config.add_route('trade', '/service/trade')
