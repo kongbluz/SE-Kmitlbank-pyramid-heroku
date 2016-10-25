@@ -108,3 +108,19 @@ class Forum(Base):
         self.title = title
         self.detail = detail
         self.createdtime = createdtime
+
+class RepeatPayment(Base):
+    __tablename__ = 'repay'
+    repayid       = Column(Integer, primary_key = True)
+    myaccount     = Column(Integer, ForeignKey('Bank.accountid'))
+    accountdes    = Column(Integer, ForeignKey('Bank.accountid'))
+    money         = Column(Float, nullable = False)
+    repaytime     = Column(DateTime, nullable = False)
+    nexttime      = Column(DateTime, nullable = False)
+
+    def __init__(self, myaccount, accountdes, money, repaytime, nexttime):
+        self.myaccount  = myaccount
+        self.accountdes = accountdes
+        self.money      = money
+        self.repaytime  = repaytime
+        self.nexttime   = nexttime
