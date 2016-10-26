@@ -25,6 +25,7 @@ class View(object):
         self.index = renderer.implementation().macros['index']
 
     @view_config(route_name='home', renderer='templates/mainpage/home.pt')
+    @forbidden_view_config(renderer='templates/mainpage/home.pt')
     def home(self):
         request = self.request
         login = ''

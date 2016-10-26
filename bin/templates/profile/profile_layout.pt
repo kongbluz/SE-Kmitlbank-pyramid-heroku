@@ -38,7 +38,7 @@
                                     <form method="post">
                                       <select name = "selector">
                                          <option  value = "">please select account bank</option>
-                                         <option tal:repeat="thisaccountid allaccountid" value="${thisaccountid.BankAccount_id}" > ${thisaccountid.BankAccount_id} </option>
+                                         <option tal:repeat="thisaccountid allaccountid" value="${thisaccountid.BankAccount_id}"> ${thisaccountid.BankAccount_id} </option>
                                       </select>
                                       <input type="submit" name="form.submitted" value="submit"/>
                                     </form>
@@ -83,6 +83,11 @@
         <div class="nav-box"> <div class="left"> <div class="right">
           <ul>
             <li><a href="${request.route_url('transaction')}" class="first"><em><b>Transaction</b></em></a></li>
+          </ul>
+        </div> </div> </div>
+        <div class="nav-box"> <div class="left"> <div class="right">
+          <ul>
+            <li><a href="${request.route_url('autopay')}" class="first"><em><b>Auto Pay</b></em></a></li>
           </ul>
         </div> </div> </div>
 

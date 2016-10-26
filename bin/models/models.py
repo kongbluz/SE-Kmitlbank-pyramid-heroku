@@ -90,8 +90,10 @@ class OwnerBankaccount(Base):
     __tablename__ = 'OwnerBank'
     obid       = Column(Integer, primary_key = True)
     otppassword      = Column(Text)
+    passcodepp         = Column(Text)
     UserAccount_id   = Column(Integer, ForeignKey('user.userid'))
     BankAccount_id   = Column(Integer, ForeignKey('Bank.accountid'))
+
 
     def __init__(self, userid, bankid):
         self.UserAccount_id = userid

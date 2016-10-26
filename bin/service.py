@@ -14,6 +14,7 @@ from pyramid.view import (
     forbidden_view_config
     )
 import datetime
+from .scripts.genOTP import GETOTP
 import simplejson as json
 
 class service(object):
@@ -30,48 +31,48 @@ class service(object):
             otp         = request.GET['otp']
             money       = request.GET['money']
         except Exception:
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'do not have some attribute'
                    }
         if accountfrom == accountdes :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'do not send to same username'
                    }
 
         user = DBSession.query(UserAccount).filter(UserAccount.username == username).first()
         if user is None :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'do not have this username'
                    }
         owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).filter(OwnerBankaccount.UserAccount_id == user.userid).first()
         if owner is None :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'wrong bank account'
                    }
 
         bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == accountdes).first()
         if bankto is None :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'wrong destination account'
                    }
 
         bank = DBSession.query(BankAccount).filter(BankAccount.accountid == owner.BankAccount_id).first()
         if owner.otppassword != otp :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'Wrong otp password'
                    }
         try:
             money = float(money)
         except Exception:
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'not money type'
                    }
         if money < 0 :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'not money type'
                    }
         elif bank.balance - money < 0 :
-            return { 'status' : 'False',
+            return { 'status' : False,
                      'detail' : 'do not have money enough'
                    }
 
@@ -83,6 +84,33 @@ class service(object):
         DBSession.add(Transaction(BankAccount_id = bankto.accountid, datetime = datetime.datetime.now(),
                                   types = 'Online Shopping+', money = money, balance = bankto.balance, detail = 'from '+bank.accountname))
         owner.otppassword = None
-        return { 'status' : 'True',
-                 'detail' : 'Succes to Shopping'
+        return { 'status' : True,
+                 'detail' : 'Success to Shopping'
                }
+
+    @view_config(route_name='addpp', renderer='json')
+    def addpp(self):
+        request = self.request
+        try:
+            account  = request.GET['account']
+            otppassword = request.GET['otp']
+        except Exception:
+            return { 'status' : False,
+                     'detail' : 'do not have some attribute'
+                   }
+        myaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == account).first()
+        if myaccount is None:
+            return { 'status' : False,
+                     'detail' : 'wrong Bank Account'
+                   }
+        if myaccount.otppassword == otppassword :
+            myaccount.passcodepp = GETOTP() + GETOTP()
+            myaccount.otppassword = None
+            return { 'status' : True,
+                     'detail' : 'Success to add prompay',
+                     'passcode' : myaccount.passcodepp
+                   }
+        else :
+            return { 'status' : False,
+                     'detail' : 'Wrong otppassword'
+                   }

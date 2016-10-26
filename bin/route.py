@@ -1,3 +1,5 @@
+from .securitys.security import RootFactory
+
 def includeme(config):
     config.add_static_view(name='css', path='bin:static/css', cache_max_age=3600)
     config.add_static_view(name='images', path='bin:static/images', cache_max_age=3600)
@@ -12,9 +14,11 @@ def includeme(config):
     config.add_route('success', '/register/success')
     config.add_route('accountregister','/accountregister')
 
-    config.add_route('profile','/profile')
-    config.add_route('transfer','/transfer')
-    config.add_route('loan','/loan')
-    config.add_route('transaction', '/transaction')
+    config.add_route('profile','/profile', factory = RootFactory)
+    config.add_route('transfer','/transfer', factory = RootFactory)
+    config.add_route('loan','/loan', factory = RootFactory)
+    config.add_route('transaction', '/transaction', factory = RootFactory)
+    config.add_route('autopay', '/autopay', factory = RootFactory)
 
     config.add_route('trade', '/service/trade')
+    config.add_route('addpp','/service/prompay/add')

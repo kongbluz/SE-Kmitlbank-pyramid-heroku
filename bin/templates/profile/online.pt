@@ -20,7 +20,7 @@
                                   <li><b>Account ID   :</b> ${accountid}</li>
                                 </ul>
                                 <li>
-                                 <form class="sec-accept">
+                                 <form class="sec-accept" method= "post" url="${url}">
                                   <div class="box3">
                                     <div class="border-top">
                                       <div class="border-right">
@@ -33,13 +33,14 @@
                                                     <div class="inner">
                                                       <li><b>Balance :</b> ${balance}</li><br>
                                                       <li><b>Debt :</b> ${loan}</li><br>
-                                                      <li><b>OTPpassword : </b> ${otppassword}</li>
+                                                      <li><b>OTPpassword : </b> ${otppassword}
+
                                                       <div tal:condition="balance and not otppassword" class="form-register">
-                                                        <form method="post" action="${url}">
+                                                          <input type="hidden" name="hiddenaccountid" value="${accountid}">
                                                           <button type="submit" class="button2" name="OTP.submitted" value="Get OTP"> GETOTP</button>
-                                                        </form></div>
+                                                      </div></li>
                                                     </div></div></div></div></div></div></div></div></div></div>
-                                <form>
+                                </form>
                             </div>
                           </div>
                         </div>

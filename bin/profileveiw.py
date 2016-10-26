@@ -4,7 +4,8 @@ from pyramid.security import (
     remember,
     forget,
     authenticated_userid,
-    Everyone
+    Everyone,
+    Authenticated,
     )
 
 from .models.models import DBSession, UserAccount, BankAccount, Costumer, OwnerBankaccount, Transaction
@@ -16,6 +17,7 @@ from pyramid.view import (
 import datetime
 from .scripts.genOTP import GETOTP
 
+
 class ProfileVeiw(object):
     def __init__(self, request):
         self.request = request
@@ -24,8 +26,7 @@ class ProfileVeiw(object):
         self.layout = renderer.implementation().macros['layout']
 
 
-
-    @view_config(route_name='profile', renderer='templates/profile/online.pt')
+    @view_config(route_name='profile',permission = 'viewprofile', renderer='templates/profile/online.pt')
     def profile(self):
         request = self.request
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
@@ -35,6 +36,7 @@ class ProfileVeiw(object):
         accountname = ''
         balance  = ''
         loan     = ''
+        otppassword = None
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
         if accountid is not '':
@@ -46,26 +48,24 @@ class ProfileVeiw(object):
         else:
             accountid = ''
 
-        if accountid is not None:
-            ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
-            if ownaccount is not None:
-                otppassword = ownaccount.otppassword
-            else :
-                otppassword = None
+        ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
+        if ownaccount is None :
+            otppassword = None
+        else :
+            otppassword = ownaccount.otppassword
 
-            if 'OTP.submitted' in request.params :
-                if ownaccount is not None:
-                    if ownaccount.otppassword is None:
-                        ownaccount.otppassword = GETOTP()
-                        otppassword = ownaccount.otppassword
-                        return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
-                                balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
-                                url = request.application_url + '/profile'
-                                )
-                    else :
-                        otppassword = ownaccount.otppassword
-                else:
-                    otppassword = None
+        if 'OTP.submitted' in request.params :
+            accountid  = request.params['hiddenaccountid']
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            accountname = bank.accountname
+            balance  = bank.balance
+            loan     = bank.loan
+            ownaccount.otppassword = GETOTP()
+            otppassword = ownaccount.otppassword
+            return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
+                        balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
+                        url = request.application_url + '/profile'
+                        )
 
 
         return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
@@ -73,7 +73,7 @@ class ProfileVeiw(object):
                     url = request.application_url + '/profile'
                     )
 
-    @view_config(route_name='transfer', renderer='templates/profile/transfer.pt')
+    @view_config(route_name='transfer',permission = 'viewprofile', renderer='templates/profile/transfer.pt')
     def tranfer(self):
         request = self.request
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
@@ -145,7 +145,7 @@ class ProfileVeiw(object):
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         return dict(title = 'Loan', allaccountid = allaccountid)
 
-    @view_config(route_name='transaction', renderer='templates/profile/transaction.pt')
+    @view_config(route_name='transaction',permission = 'viewprofile', renderer='templates/profile/transaction.pt')
     def transaction(self):
         request = self.request
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
@@ -161,3 +161,16 @@ class ProfileVeiw(object):
             accountid = ''
 
         return dict(title = 'Transaction', allaccountid = allaccountid, alltransaction = alltransaction)
+
+    @view_config(route_name='autopay',permission = 'viewprofile', renderer='templates/profile/autopay.pt')
+    def autopay(self):
+        request = self.request
+        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        message = None
+        balance = None
+        accountid = None
+        if 'form.submitted' in request.params :
+            accountid    = request.params['selector']
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            balance     = bank.balance
+        return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid)

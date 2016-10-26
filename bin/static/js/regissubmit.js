@@ -9,7 +9,7 @@ function fncSubmit() {
     document.form1.password.focus();
     return false;
   }
-  else if(document.form1.ConPassword.value == "")  {
+  else if(document.form1.txtConPassword.value == "")  {
     alert('Please input Confirm Password');
     document.form1.txtConPassword.focus();
     return false;

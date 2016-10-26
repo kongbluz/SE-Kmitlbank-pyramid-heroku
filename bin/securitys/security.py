@@ -3,6 +3,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.security import (
     Authenticated,
     Everyone,
+    Allow,
 )
 
 from ..models.models import DBSession, UserAccount
@@ -43,3 +44,10 @@ def includeme(config):
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(ACLAuthorizationPolicy())
     config.add_request_method(get_user, 'user', reify=True)
+
+class RootFactory(object):
+    __acl__ = [(Allow, Everyone, 'view'),
+               (Allow, 'role:editors', ('editor')),
+               (Allow, Authenticated, 'viewprofile')]
+    def __init__(self, request):
+        pass
