@@ -106,9 +106,16 @@ class service(object):
         if myaccount.otppassword == otppassword :
             myaccount.passcodepp = GETOTP() + GETOTP()
             myaccount.otppassword = None
+            bank      = DBSession.query(BankAccount).filter(BankAccount.accountid == account).first()
+            costumer  = DBSession.query(Costumer).filter(Costumer.costumerid == bank.Costumer_id).first()
             return { 'status' : True,
                      'detail' : 'Success to add prompay',
-                     'passcode' : myaccount.passcodepp
+                     'passcode' : myaccount.passcodepp,
+                     'name' : costumer.fullname,
+                     'accountname' : bank.accountname,
+                     'accountid' : bank.accountid,
+                     'nationid' : costumer.nationid,
+                     'phonenumber' : costumer.phonenummber
                    }
         else :
             return { 'status' : False,
