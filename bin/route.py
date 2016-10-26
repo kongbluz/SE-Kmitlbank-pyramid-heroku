@@ -22,3 +22,4 @@ def includeme(config):
 
     config.add_route('trade', '/service/trade')
     config.add_route('addpp','/service/prompay/add')
+    config.add_route('tradepp', '/service/prompay/trade')

@@ -103,6 +103,7 @@ class service(object):
             return { 'status' : False,
                      'detail' : 'wrong Bank Account'
                    }
+
         if myaccount.otppassword == otppassword :
             myaccount.passcodepp = GETOTP() + GETOTP()
             myaccount.otppassword = None
@@ -121,3 +122,66 @@ class service(object):
             return { 'status' : False,
                      'detail' : 'Wrong otppassword'
                    }
+
+    @view_config(route_name='tradepp', renderer='json')
+    def tradepp(self):
+        request = self.request
+        try:
+            accountfrom = request.GET['account']
+            accountdes  = request.GET['accountdes']
+            passcode    = request.GET['passcode']
+            money       = request.GET['money']
+        except Exception:
+            return { 'status' : False,
+                     'detail' : 'do not have some attribute'
+                   }
+
+        if accountfrom == accountdes :
+            return { 'status' : False,
+                     'detail' : 'do not send to same username'
+                   }
+
+        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).first()
+        if owner is None :
+            return { 'status' : False,
+                     'detail' : 'wrong bank account'
+                   }
+
+        bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == accountdes).first()
+        if bankto is None :
+            return { 'status' : False,
+                     'detail' : 'wrong destination account'
+                   }
+
+        bank = DBSession.query(BankAccount).filter(BankAccount.accountid == owner.BankAccount_id).first()
+        if owner.passcodepp != passcode :
+            return { 'status' : False,
+                     'detail' : 'Wrong passcode'
+                   }
+        try:
+            money = float(money)
+        except Exception:
+            return { 'status' : False,
+                     'detail' : 'not money type'
+                   }
+        if money < 0 :
+            return { 'status' : False,
+                     'detail' : 'not money type'
+                   }
+        elif bank.balance - money < 0 :
+            return { 'status' : False,
+                     'detail' : 'do not have money enough'
+                   }
+
+        bank.balance -= money
+        DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
+                                  types = 'Prompay-', money = money, balance = bank.balance, detail = 'to '+bankto.accountname))
+
+        bankto.balance += money
+        DBSession.add(Transaction(BankAccount_id = bankto.accountid, datetime = datetime.datetime.now(),
+                                  types = 'Prompay+', money = money, balance = bankto.balance, detail = 'from '+bank.accountname))
+        owner.otppassword = None
+        return { 'status' : True,
+                 'detail' : 'Success to Shopping',
+                 'balance' : bank.balance
+               }
