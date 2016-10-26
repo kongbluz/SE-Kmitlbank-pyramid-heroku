@@ -64,11 +64,6 @@ class ProfileVeiw(object):
             loan     = bank.loan
             ownaccount.otppassword = GETOTP()
             otppassword = ownaccount.otppassword
-            return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
-                        balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
-                        url = request.application_url + '/profile'
-                        )
-
 
         return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
                     balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
