@@ -49,10 +49,11 @@ class ProfileVeiw(object):
             accountid = ''
 
         ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
-        if ownaccount is None :
-            otppassword = None
-        else :
+        try:
             otppassword = ownaccount.otppassword
+        except Exception:
+            otppassword = None
+
 
         if 'OTP.submitted' in request.params :
             accountid  = request.params['hiddenaccountid']
