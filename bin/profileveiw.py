@@ -57,6 +57,7 @@ class ProfileVeiw(object):
 
         if 'OTP.submitted' in request.params :
             accountid  = request.params['hiddenaccountid']
+            ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
             bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
             accountname = bank.accountname
             balance  = bank.balance
