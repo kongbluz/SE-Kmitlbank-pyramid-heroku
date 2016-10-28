@@ -186,8 +186,7 @@ class service(object):
 
         return { 'status' : True,
                  'detail' : 'Success to Shopping',
-                 'balance' : bank.balance
-                 'datetime' : transactions.datetime
-                 'money' : transactions.money
-                 'balance' : transactions.balance
+                 'datetime' : transactions.datetime,
+                 'money' : transactions.money,
+                 'balance' : transactions.balance,
                }
