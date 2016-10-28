@@ -181,7 +181,13 @@ class service(object):
         DBSession.add(Transaction(BankAccount_id = bankto.accountid, datetime = datetime.datetime.now(),
                                   types = 'Prompay+', money = money, balance = bankto.balance, detail = 'from '+bank.accountname))
         owner.otppassword = None
+
+        transactions = DBSession.query(Transaction).filter(Transaction.BankAccount_id == bank.accountid).order_by(Transaction.transactionid.desc()).first()
+
         return { 'status' : True,
                  'detail' : 'Success to Shopping',
                  'balance' : bank.balance
+                 'datetime' : transactions.datetime
+                 'money' : transactions.money
+                 'balance' : transactions.balance
                }
