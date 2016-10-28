@@ -1,2 +1,2 @@
-/**/__pycache__/*
-bin.egg-info/*
+*.egg-info
+**/__pycache__/*
