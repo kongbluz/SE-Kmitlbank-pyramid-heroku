@@ -17,10 +17,12 @@ from ..models.models import (
     )
 
 def main(argv=sys.argv):
-    settings = {'sqlalchemy.url': os.environ['DATABASE_URL']}
+
+    settings = {'sqlalchemy.url': os.environ['DATABASE_URL'] = os.environ.get('DATABASE_URL', 'sqlite:///./user.sqlite')}
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
+
     with transaction.manager:
         modelcostumer = Costumer(nationid = '1001', fullname = 'admin eieigum', brithday = datetime.datetime.now(), address = 'guy u u u u u u', phonenumber = '098765434312')
         DBSession.add(modelcostumer)
