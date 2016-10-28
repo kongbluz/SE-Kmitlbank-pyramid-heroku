@@ -18,7 +18,7 @@ from ..models.models import (
 
 def main(argv=sys.argv):
 
-    settings = {'sqlalchemy.url': os.environ['DATABASE_URL'] = os.environ.get('DATABASE_URL', 'sqlite:///./user.sqlite')}
+    settings = {'sqlalchemy.url': os.environ['DATABASE_URL']}
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
