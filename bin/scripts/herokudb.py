@@ -4,6 +4,7 @@ import transaction
 import datetime
 
 from sqlalchemy import engine_from_config
+from .encrypt import hash_password
 
 from ..models.models import (
     DBSession,
