@@ -39,16 +39,17 @@ class ProfileVeiw(object):
         otppassword = None
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
-        if accountid is not '':
+        if accountid is not 0:
             bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
             if bank is not None:
                 accountname = bank.accountname
                 balance     = bank.balance
                 loan        = bank.loan
         else:
-            accountid = ''
+            accountid = 0
 
-        ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
+
+        ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == int(accountid)).first()
         try:
             otppassword = ownaccount.otppassword
         except Exception:
@@ -57,7 +58,7 @@ class ProfileVeiw(object):
 
         if 'OTP.submitted' in request.params :
             accountid  = request.params['hiddenaccountid']
-            ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == accountid).first()
+            ownaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == int(accountid)).first()
             bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
             accountname = bank.accountname
             balance  = bank.balance
@@ -65,6 +66,8 @@ class ProfileVeiw(object):
             ownaccount.otppassword = GETOTP()
             otppassword = ownaccount.otppassword
 
+        if accountid is 0 :
+            accountid = ''
         return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
                     balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
                     url = request.application_url + '/profile'

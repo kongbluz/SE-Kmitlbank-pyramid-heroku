@@ -6,6 +6,7 @@ from sqlalchemy import(
     Integer,
     Text,
     Float,
+    Unicode,
 )
 from ..scripts.encrypt import hash_password
 
@@ -42,7 +43,7 @@ class Costumer(Base):
     __tablename__ = 'costumer'
     costumerid    = Column(Integer, primary_key = True)
     nationid      = Column(Text, unique = True, nullable = False)
-    fullname      = Column(Text)
+    fullname      = Column(Unicode(255))
     brithday      = Column(DateTime, nullable = False)
     address       = Column(Text)
     phonenummber  = Column(Text)
