@@ -12,29 +12,32 @@
                             <div class="left-bot-corner">
                               <div class="inner">
                                 <h2>Auto Pay</h2>
+                                <p>${message}</p>
                                 <ul class="list1">
                                   <li><b>Account ID   :</b> ${accountid} </li>
                                   <li><b>Balance      :</b> ${balance} </li>
                                   <form method="post">
 
-                                    <input type="hidden" name="myaccount"
+                                    <input type="hidden" name="hiddenaccountid"
                                            value="${accountid}"/>
-                                    <input type="hidden" name="mybalance"
-                                            value="${balance}"/>
                                   <li>
                                        Account Number :
-                                       <input type="text" name="tranferaccount" placeholder="please Enter Acc.Number">
+                                       <input type="text" name="transferaccount" placeholder="please Enter Acc.Number">
                                   </li>
                                   <li>
                                        Money Pay :
-                                       <input type="text" name="money" placeholder="$.00">
+                                       <input type="text" name="pmoney" placeholder="$.00">
                                   </li>
                                   <li>
                                        Period :<em>
-                                       <input type="text" name="money" placeholder="day">&nbsp&nbsp<input type="text" name="money" placeholder="month">&nbsp&nbsp<input type="text" name="money" placeholder="year">
+                                       <input type="text" name="pyear" placeholder="years">
+                                       &nbsp&nbsp
+                                       <input type="text" name="pmonth" placeholder="months">
+                                       &nbsp&nbsp
+                                       <input type="text" name="pday" placeholder="days">
                                   </em></li>
                                   <li>
-                                      <input type="submit" class="button2" name="transfer.submitted" value="Submit">
+                                      <input type="submit" class="button2" name="autopay.submitted" value="Submit">
                                   </li>
                                   </form>
                                 </ul>
@@ -61,14 +64,28 @@
                        <div class="right-bot-corner">
                          <div class="left-bot-corner">
                            <div class="inner">
-                             <h2>Transactions</h2>
+                             <h2>Timeline</h2>
                              <table border="1" align="center" width="90%" cellpadding="10"  bordercolor="black">
                                <tr align="center">
-                                 <th>Date Time</th>
-                                 <th>Type</th>
+                                 <th>Period</th>
+                                 <th>Reply time</th>
+                                 <th>To ID</th>
                                  <th>Money</th>
-                                 <th>Balance</th>
-                                 <th>Detail</th>
+                                 <th>Delete</th>
+                               </tr>
+                               <tr tal:repeat="thisrepeat allrepeat">
+                                 <th>${thisrepeat.nextyear}y-${thisrepeat.nextmonth}m-${thisrepeat.nextday}d</th>
+                                 <th>${thisrepeat.nexttime}</th>
+                                 <th>${thisrepeat.accountdes}</th>
+                                 <th>${thisrepeat.money}</th>
+                                 <th><form method="post">
+                                      <input type="hidden" name="repayid"
+                                             value="${thisrepeat.repayid}"/>
+                                      <input type="hidden" name="hiddenaccountid"
+                                                    value="${accountid}"/>
+                                      <input type="submit" name="delete.submitted"
+                                             value="Delete"/>
+                                     </form></th>
                                </tr>
                              </table>
                           </div>

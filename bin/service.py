@@ -136,6 +136,7 @@ class service(object):
                      'detail' : 'do not have some attribute'
                    }
 
+
         if accountfrom == accountdes :
             return { 'status' : False,
                      'detail' : 'do not send to same username'
@@ -164,7 +165,7 @@ class service(object):
             return { 'status' : False,
                      'detail' : 'not money type'
                    }
-        if money < 0 :
+        if money <= 0 :
             return { 'status' : False,
                      'detail' : 'not money type'
                    }

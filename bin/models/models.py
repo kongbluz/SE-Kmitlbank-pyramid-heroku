@@ -118,12 +118,16 @@ class RepeatPayment(Base):
     myaccount     = Column(Integer, ForeignKey('Bank.accountid'))
     accountdes    = Column(Integer, ForeignKey('Bank.accountid'))
     money         = Column(Float, nullable = False)
-    repaytime     = Column(DateTime, nullable = False)
+    nextyear       = Column(Integer)
+    nextmonth       = Column(Integer)
+    nextday       = Column(Integer)
     nexttime      = Column(DateTime, nullable = False)
 
-    def __init__(self, myaccount, accountdes, money, repaytime, nexttime):
+    def __init__(self, myaccount, accountdes, money,  nextyear, nextmonth, nextday, nexttime):
         self.myaccount  = myaccount
         self.accountdes = accountdes
         self.money      = money
-        self.repaytime  = repaytime
         self.nexttime   = nexttime
+        self.nextyear   = nextyear
+        self.nextmonth   = nextmonth
+        self.nextday    = nextday

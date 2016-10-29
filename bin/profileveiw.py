@@ -8,7 +8,7 @@ from pyramid.security import (
     Authenticated,
     )
 
-from .models.models import DBSession, UserAccount, BankAccount, Costumer, OwnerBankaccount, Transaction
+from .models.models import DBSession, UserAccount, BankAccount, Costumer, OwnerBankaccount, Transaction, RepeatPayment
 from pyramid.view import (
     view_config,
     view_defaults,
@@ -16,7 +16,7 @@ from pyramid.view import (
     )
 import datetime
 from .scripts.genOTP import GETOTP
-
+from dateutil.relativedelta import relativedelta
 
 class ProfileVeiw(object):
     def __init__(self, request):
@@ -118,7 +118,7 @@ class ProfileVeiw(object):
                 message = 'itn''t money'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-            if money < 0 :
+            if money <= 0 :
                 message = 'You don''t have negative money'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
@@ -166,6 +166,7 @@ class ProfileVeiw(object):
     def autopay(self):
         request = self.request
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allrepeat = None
         message = None
         balance = None
         accountid = None
@@ -173,4 +174,58 @@ class ProfileVeiw(object):
             accountid    = request.params['selector']
             bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
             balance     = bank.balance
-        return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid)
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+
+        if 'autopay.submitted' in request.params :
+            accountid   = request.params['hiddenaccountid']
+            money       = request.params['pmoney']
+            year        = request.params['pyear']
+            month       = request.params['pmonth']
+            day         = request.params['pday']
+            bankto      = request.params['transferaccount']
+
+            try:
+                year = int(year)
+            except Exception:
+                year = 0
+            try:
+                month = int(month)
+            except Exception:
+                month = 0
+            try:
+                day = int(day)
+            except Exception:
+                day = 0
+            try:
+                float(money)
+            except Exception:
+                message = "It not Money"
+                return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)
+            bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == int(bankto)).first()
+
+            if bankto is None :
+                message = "Wrong Bank Account"
+                return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)
+            if bankto == accountid :
+                message = "Can not transfer to own BankAccount"
+                return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)
+
+            accountid = int(accountid)
+            repeattime = datetime.datetime.now()
+            repeattime += relativedelta(days=+ day, months=+ month, years=+ year)
+            DBSession.add(RepeatPayment(myaccount = accountid,
+                                        accountdes = bankto.accountid,
+                                        money = money,
+                                        nextyear = year, nextmonth = month,
+                                        nextday = day,
+                                        nexttime = repeattime))
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+
+        if 'delete.submitted' in request.params :
+            repayid = request.params['repayid']
+            accountid = request.params['hiddenaccountid']
+            deltarget = DBSession.query(RepeatPayment).filter(RepeatPayment.repayid == repayid).one()
+            DBSession.delete(deltarget)
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+
+        return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)

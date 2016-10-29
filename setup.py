@@ -14,6 +14,7 @@ requires = [
     'waitress',
     'psycopg2',
     'simplejson',
+    'python-dateutil',
 ]
 
 setup(name = 'bin',
