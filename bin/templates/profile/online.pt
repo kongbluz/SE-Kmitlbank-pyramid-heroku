@@ -31,8 +31,8 @@
                                                 <div class="right-bot-corner">
                                                   <div class="left-bot-corner">
                                                     <div class="inner">
-                                                      <li><b>Balance :</b> ${balance}</li><br>
-                                                      <li><b>Debt :</b> ${loan}</li><br>
+                                                      <li><b>Balance :</b><font color="#7CFC00"> ${balance}</font></li><br>
+                                                      <li><b>Debt :</b><font color="red"> ${loan}</font></li><br>
                                                       <li><b>OTPpassword : </b> ${otppassword}
 
                                                       <div tal:condition="balance and not otppassword" class="form-register">
