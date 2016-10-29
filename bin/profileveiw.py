@@ -30,7 +30,7 @@ class ProfileVeiw(object):
     def profile(self):
         request = self.request
         allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
-        accountid = ''
+        accountid = 0
         costumer = DBSession.query(Costumer).filter(Costumer.costumerid == UserAccount.by_id(self.logged_in).Costumer_id).first()
         name     = costumer.fullname
         accountname = ''
