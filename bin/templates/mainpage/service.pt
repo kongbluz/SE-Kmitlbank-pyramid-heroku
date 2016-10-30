@@ -15,16 +15,16 @@
                                 <h2>Services</h2>
                                 <ul class="list1">
                                   <li>
-                                    <img id="imgleft" src="images/service1.png"/ width="10%"/><span id="first">โอนเงินออนไลน์</span><br><p><br>ท่านสามารถโอนเงินระหว่างบัญชี KMITL Bank และบัญชีธนาคารอื่นผ่านทางเว็บไซต์ได้</p>
+                                    <img id="imgleft" src="images/service1.png"/ width="10%"/><span id="first">โอนเงินออนไลน์</span><br><p id="aa"><br>ท่านสามารถโอนเงินระหว่างบัญชี KMITL Bank และบัญชีธนาคารอื่นผ่านทางเว็บไซต์ได้</p>
                                   </li>
                                   <li>
-                                    <img id="imgleft" src="images/service2.png"/ width="10%"/><span id="first">ชำระเงินออนไลน์</span><br><p><br>ท่านสามารถชำระเงินบริการต่างๆที่ร่วมรายการผ่านทางเว็บไซต์ได้</p>
+                                    <img id="imgleft" src="images/service2.png"/ width="10%"/><span id="first">ชำระเงินออนไลน์</span><br><p id="aa"><br>ท่านสามารถชำระเงินบริการต่างๆที่ร่วมรายการผ่านทางเว็บไซต์ได้</p>
                                   </li>
                                   <li>
-                                    <img id="imgleft" src="images/service3.png"/ width="10%"/><span id="first">กู้เงิน</span><br><p><br>ท่านสามารถกู้เงินผ่านทางเว็บไซต์ได้</p>
+                                    <img id="imgleft" src="images/service3.png"/ width="10%"/><span id="first">กู้เงิน</span><br><p id="aa"><br>ท่านสามารถกู้เงินผ่านทางเว็บไซต์ได้</p>
                                   </li>
                                   <li>
-                                    <img id="imgleft" src="images/service4.png"/ width="10%"/><span id="first">เช็คยอดเงินคงเหลือและยอดเงินกู้</span><br><p><br>ท่านสามารถเช็คยอดเงินคงเหลือในบัญชีและเช็คยอดเงินกู้ผ่านทางเว็บไซต์ได้</p>
+                                    <img id="imgleft" src="images/service4.png"/ width="10%"/><span id="first">เช็คยอดเงินคงเหลือและยอดเงินกู้</span><br><p id="aa"><br>ท่านสามารถเช็คยอดเงินคงเหลือในบัญชีและเช็คยอดเงินกู้ผ่านทางเว็บไซต์ได้</p>
                                   </li>
                                 </ul>
                             </div>

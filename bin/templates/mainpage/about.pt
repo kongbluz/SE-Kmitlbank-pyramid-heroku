@@ -14,10 +14,10 @@
                               <div class="inner">
                                 <h2>About Us</h2>
                                 <ul class="list1">
-                                <span id="first">ประวัติความเป็นมา</span><br><br>
-                                  <li>KMITL Bank ก่อตั้งเมื่อวันที่ 1 สิงหาคม พ.ศ.2559 เพื่อประกอบการเรียนวิชา Software Engineering ภาคเรียนที่ 1 ปีการศึกษา 2559</li>
+                                <span id="first">ประวัติความเป็นมา</span><br><br><br>
+                                  <li>KMITL Bank ก่อตั้งเมื่อวันที่ 1 สิงหาคม พ.ศ.2559 เพื่อประกอบการเรียนวิชา Software Engineering <br>ภาคเรียนที่ 1 ปีการศึกษา 2559</li>
                                   <br>
-                                <span id="first">จัดทำโดย</span><br><br>
+                                <span id="first">จัดทำโดย</span><br><br><br>
                                   <li>นายพงศธร วานิชชินชัย</li>
                                   <li>นางสาวพรฉาย อภิชาติพันธุ์</li>
                                   <li>นางสาวสิรภัทร ติยะสุวรรณ</li>

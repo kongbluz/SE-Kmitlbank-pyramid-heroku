@@ -14,7 +14,7 @@
                               <div class="inner">
                                 <ul class="list1">
                                   <li>
-                                      <span id="first">${newstitle}</span><br><br><br><p> ${structure: detail}</p>
+                                      <span id="first">${newstitle}</span><br><br><br><p id="aa"> ${structure: detail}</p>
                                   </li>
                                 </ul>
                             </div>
