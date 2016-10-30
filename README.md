@@ -13,16 +13,21 @@ $ pserve development.ini
 - and let fun
 
 ## how to run on heroku
+
+- Create heroku App
 ```
 $ cd <this directory>
 
 $ heroku create --stack cedar
 
 $ git push heroku master
-
-$ heroku addons:create heroku-postgresql:hobby-dev --as DATABASE_URL
+```
+- Establish primary DB
+```
+$ heroku addons:create heroku-postgresql:hobby-dev
 
 $ heroku pg:promote <HEROKU_POSTGRESQL_NAME>
-
+```
+- Create Table
 $ heroku run 'python -m bin.scripts.herokudb'
 ```
