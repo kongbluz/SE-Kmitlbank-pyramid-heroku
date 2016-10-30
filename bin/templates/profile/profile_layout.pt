@@ -77,11 +77,6 @@
         </div> </div> </div>
         <div class="nav-box"> <div class="left"> <div class="right">
           <ul>
-            <li><a href="${request.route_url('loan')}" class="first"><em><b>Loan</b></em></a></li>
-          </ul>
-        </div> </div> </div>
-        <div class="nav-box"> <div class="left"> <div class="right">
-          <ul>
             <li><a href="${request.route_url('transaction')}" class="first"><em><b>Transaction</b></em></a></li>
           </ul>
         </div> </div> </div>
