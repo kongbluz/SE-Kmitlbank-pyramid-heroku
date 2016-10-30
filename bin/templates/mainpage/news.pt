@@ -1,0 +1,59 @@
+<div metal:use-macro="view.index">
+  <div metal:fill-slot="content">
+ <!-- use -->
+    <div id="container">            <!-- box begin -->
+            <div class="box">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <ul class="list1">
+                                  <li>
+                                      <span id="first">${newstitle}</span><br><br><br><p> ${structure: detail}</p>
+                                  </li>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div class="box2">
+              <div class="border-top">
+                <div class="border-right">
+                  <div class="border-bot">
+                    <div class="border-left">
+                      <div class="left-top-corner">
+                        <div class="right-top-corner">
+                          <div class="right-bot-corner">
+                            <div class="left-bot-corner">
+                              <div class="inner">
+                                <ul class="list1">
+                                  <li>
+                                    <p><br>เมื่อ ${time}</p>
+                                  </li>
+                                </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- box end --> <!-- not  use -->
+  <!-- footer -->
+</div>
+</div>
+</div>

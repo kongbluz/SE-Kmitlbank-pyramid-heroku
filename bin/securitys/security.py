@@ -47,7 +47,7 @@ def includeme(config):
 
 class RootFactory(object):
     __acl__ = [(Allow, Everyone, 'view'),
-               (Allow, 'role:editors', ('editor')),
-               (Allow, 'role:viewer', 'viewprofile')]
+               (Allow, 'role:editor', 'editor'),
+               (Allow, 'role:viewer', 'viewprofile'),]
     def __init__(self, request):
         pass

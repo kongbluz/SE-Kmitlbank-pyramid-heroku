@@ -20,7 +20,6 @@
                                     Username : <input type="text" placeholder="username" name="username" value="${username}"/><br>
                                     Password : <input type="password" maxlength="15" placeholder="password" id="txtPassword" name="password"/><br>
                                     Repassword : <input type="password" maxlength="15" placeholder="repassword"  id="txtConPassword" name="txtConPassword"/><br>
-                                    Account Name : <input type="text" placeholder="accountName" name="accountname" value="${accountname}"/><br>
                                     Account Number : <input type="text" placeholder="accountNo" name="accountid" value="${accountid}" /><br>
                                     Nation ID : <input type="text" placeholder="xxxxxxxxxxxxx" maxlength="13" name="nationid" value="${nationid}" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}"/><br>
                                     <button name="form.submitted" value="Submit">Submit</button>

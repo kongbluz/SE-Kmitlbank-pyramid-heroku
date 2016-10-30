@@ -13,6 +13,7 @@ def includeme(config):
     config.add_route('register','/register')
     config.add_route('success', '/register/success')
     config.add_route('accountregister','/accountregister')
+    config.add_route('news', '/news/linkto/{ifd}')
 
     config.add_route('profile','/profile', factory = RootFactory)
     config.add_route('transfer','/transfer', factory = RootFactory)
@@ -23,3 +24,9 @@ def includeme(config):
     config.add_route('trade', '/service/trade')
     config.add_route('addpp','/service/prompay/add')
     config.add_route('tradepp', '/service/prompay/trade')
+
+    config.add_route('news_view', '/news/view/{ifd}', factory = RootFactory)
+    config.add_route('news_add', '/news/add', factory = RootFactory)
+    config.add_route('news_delete', 'news/delete/{ifd}', factory = RootFactory)
+    config.add_route('list_news', '/news/lists', factory = RootFactory)
+    config.add_static_view('deform_static', 'deform:static/')

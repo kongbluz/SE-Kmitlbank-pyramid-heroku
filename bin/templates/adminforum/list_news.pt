@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang='th'>
+  <head>
+      <meta charset="UTF-8">
+      <title> News - ${title} </title>
+  </head>
+  <body>
+    <a href="${request.route_url('news_add')}">Add News</a>
+    <ul>
+      <li tal:repeat="page pages">
+        <a href="${request.route_url('news_view', ifd=page.ifd)}">
+              ${page.title}
+        </a>
+      </li>
+    </ul>
+  </body>
+</html>  

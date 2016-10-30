@@ -49,14 +49,14 @@ nav .nav-box .right { background:url(../images/nav-box-right.gif) no-repeat righ
 h2 { font-size:20px; line-height:1em; font-weight:bold; margin-bottom:23px; color:#515151; font-family: Tahoma;}
 h3 { color="#0275d8"; }
 
-section { float:left; width:70%; margin:5px; padding-top:5px;}
-span#first { float:left; color:#0275d8; font-size: 20px; font-weight:bold; margin-left: 10px; font-family: Tahoma;}
+section { float:left; width:70%; padding-top:5px; margin-bottom: 10px;}
+span#first { float:left; color:#0275d8; font-size: 20px; font-weight:bold; margin-left: 10px; font-family: Tahoma; margin-top: 17px;}
 
 .list1 li { padding-bottom:35px;list-style:none;font-family: Tahoma; padding-left: 40px;}
-.list1 li p { margin-bottom:10px;list-style:none;margin-left: 120px; font-size: 16px; padding-right: 50px; font-family: Tahoma;}
+.list1 li p { margin-bottom:10px;list-style:none;margin-left: 50px; font-size: 16px;  font-family: Tahoma;}
 
 /*==================boxes====================*/
-.box { background:url(../images/box-bg.gif) left top repeat-x; width:100%;}
+.box { background:url(../images/box-bg.gif) left top repeat-x; width:100%; margin: 7px 0;}
 .box .border-top {background:url(../images/border.gif) repeat-x top;}
 .box .border-bot {background:url(../images/border.gif) repeat-x bottom;}
 .box .border-left {background:url(../images/border.gif) repeat-y left;}
@@ -66,9 +66,20 @@ span#first { float:left; color:#0275d8; font-size: 20px; font-weight:bold; margi
 .box .left-bot-corner {background:url(../images/left-bot-corner.gif) no-repeat left bottom; width:100%;}
 .box .right-bot-corner {background:url(../images/right-bot-corner.gif) no-repeat right bottom; }
 .box .inner { padding:27px 35px 30px 34px;}
+/*==================boxes=2===================*/
+.box2 { background:url(../images/box-bg.gif) left top repeat-x; width:100%; margin-bottom: 7px;}
+.box2 .border-top {background:url(../images/border.gif) repeat-x top;}
+.box2 .border-bot {background:url(../images/border.gif) repeat-x bottom;}
+.box2 .border-left {background:url(../images/border.gif) repeat-y left;}
+.box2 .border-right {background:url(../images/border.gif) repeat-y right;}
+.box2 .left-top-corner {background:url(../images/left-top-corner.gif) no-repeat left top;}
+.box2 .right-top-corner {background:url(../images/right-top-corner.gif) no-repeat right top;}
+.box2 .left-bot-corner {background:url(../images/left-bot-corner.gif) no-repeat left bottom; width:100%;}
+.box2 .right-bot-corner {background:url(../images/right-bot-corner.gif) no-repeat right bottom; }
+.box2 .inner {text-align: right; margin-right: 20px; padding-top: 20px}
 
 /*================aside=================*/
-aside { float:right; padding:5px 25px 0 10px; background:white; width:25%; }
+aside { float:right; padding:8px 10px 0 10px; background:white; width:27%; }
 
 img#imgleft { float:left; }
 
@@ -113,7 +124,7 @@ img#imgleft { float:left; }
 .form-register .message a { color: #2dabf9; text-decoration: none; }
 
 /*footer*/
-footer {color:white; background:#717171; clear:both; padding:27px 0 30px 0; font-size: 13px;}
+footer {color:white; background:#717171; clear:both; padding:27px 0 30px 0; font-size: 13px; width:70%; margin:0px auto;}
 
 footer .nav { text-align:center; padding-bottom:30px;}
 footer .nav li { display:inline;}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang='th'>
+  <head>
+      <meta charset="UTF-8">
+      <title> News - ${title} </title>
+  </head>
+  <body>
+    <p>${page.title}</p>
+    <p>${structure: page.detail}</p>
+    <p>${page.createdtime}</p>
+    <a href="${request.route_url('news_delete', ifd=page.ifd)}">
+      Delete
+    </a>
+    <p><a href="${request.route_url('list_news')}"> Back to Views </a></p>
+  </body>
+</html>

@@ -51,20 +51,8 @@
                               <div class="inner">
                                 <h2>News & Promotions</h2>
                                 <ul class="list1">
-                                  <li>
-                                    <img id="imgleft" src="html555.jpg"/ width="15%"/><span id="first">HTML</span><br><p>BigBiz LLC announces a partnership with Clayton-Roberts - the leading financial consulting player.</p>
-                                  </li>
-                                  <li>
-                                    <img id="imgleft" src="html555.jpg"/ width="15%"/><span id="first">HTML</span><br><p>BigBiz LLC announces a partnership with Clayton-Roberts - the leading financial consulting player.</p>
-                                  </li>
-                                  <li>
-                                    <img id="imgleft" src="html555.jpg"/ width="15%"/><span id="first">HTML</span><br><p>The thirddfuhsjvosfgjdfo;sdjgdfgsdgfsgfddfsdgbsf news item is usually not even being read.</p>
-                                  </li>
-                                  <li>
-                                    <img id="imgleft" src="html555.jpg"/ width="15%"/><span id="first">HTML</span><br><p>BigBiz LLC announces a partnership with Clayton-Roberts - the leading financial consulting player.</p>
-                                  </li>
-                                  <li>
-                                    <img id="imgleft" src="html555.jpg"/ width="15%"/><span id="first">HTML</span><br><p>The third news item is usually not even being read.</p>
+                                  <li tal:repeat="new allnews">
+                                    <a href="${request.route_url('news', ifd=new.ifd)}"><br><img id="imgleft" src="${request.static_url('bin:static/images/news.png')}" width="14%"/><span id="first">${new.title}</span><br></a>
                                   </li>
                                 </ul>
                             </div>
@@ -94,10 +82,17 @@
       </div>
     </aside>
 
+
+
+
+
     <aside id="aside" tal:condition="view.logged_in is not None">
       <!--login-page-->
       <div class="login-page">
         <div class="form" >
+              <form class="login-form" action="${request.route_url('list_news')}" method="post" tal:condition="view.logged_in is 1">
+                <button >Edit News</button>
+              </form>
           <form class="login-form" action="${request.route_url('logout')}" method="post">
             <button >Log out</button>
           </form>
@@ -109,11 +104,11 @@
     <!-- footer -->
       <footer id="footer">
           <ul class="nav">
-            <li><a href="index.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)" >Home</a>|</li>
-            <li><a href="service.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Service</a>|</li>
-            <li><a href="about.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">About</a>|</li>
-            <li><a href="contact.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Contact</a>|</li>
-            <li><a href="register.html" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Register</a></li>
+            <li><a href="${request.route_url('home')}"  onmouseover="mouseIn(this)" onmouseout="mouseOut(this)" >Home</a>|</li>
+            <li><a href="${request.route_url('service')}" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Service</a>|</li>
+            <li><a href="${request.route_url('about')}" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">About</a>|</li>
+            <li><a href="${request.route_url('contact')}" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Contact</a>|</li>
+            <li><a href="${request.route_url('register')}" onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">Register</a></li>
           </ul>
          <div class="wrapper">
             <div class="fleft">Copyright &copy; 2016 <a href="https://www.ce.kmitl.ac.th">CE-KMITL</a>. All Rights Reserved</div>

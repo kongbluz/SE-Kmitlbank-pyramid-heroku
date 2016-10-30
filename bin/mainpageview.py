@@ -7,7 +7,7 @@ from pyramid.security import (
     Everyone
     )
 
-from .models.models import DBSession, UserAccount, BankAccount, Costumer, OwnerBankaccount
+from .models.models import DBSession, UserAccount, BankAccount, Costumer, OwnerBankaccount, Forum
 from pyramid.view import (
     view_config,
     view_defaults,
@@ -28,6 +28,7 @@ class View(object):
     @forbidden_view_config(renderer='templates/mainpage/home.pt')
     def home(self):
         request = self.request
+        allnews = DBSession.query(Forum).order_by(Forum.createdtime)
         login = ''
         password = ''
         message = ''
@@ -42,7 +43,7 @@ class View(object):
                 return HTTPFound( location = '/profile', headers = headers)
             else:
                 message = 'username or password is invalid'
-        return dict(title = 'Home', url = request.application_url + '/', login = login, password = password, message = message)
+        return dict(title = 'Home', url = request.application_url + '/', login = login, password = password, message = message, allnews = allnews)
 
     @view_config(route_name='contact', renderer='templates/mainpage/contact.pt')
     def contact(self):
@@ -63,13 +64,23 @@ class View(object):
 
         return dict(title = 'Registration Success', username = username)
 
+    @view_config(route_name='news', renderer='templates/mainpage/news.pt')
+    def news(self):
+        request = self.request
+        ifd = int(self.request.matchdict['ifd'])
+        thisnews = DBSession.query(Forum).filter(Forum.ifd == ifd).one()
+        newstitle = thisnews.title
+        detail = thisnews.detail
+        time = thisnews.createdtime
+
+        return dict(title = 'News', newstitle = newstitle, detail = detail, time = time)
+
     @view_config(route_name='register', renderer='templates/mainpage/register.pt')
     def register(self):
         request = self.request
         message = ''
         username = ''
         try:
-            accountname =  request.GET['getaccountname']
             accountid   =  request.GET['getaccountid']
             nationid    =  request.GET['getnationid']
         except Exception:
@@ -80,7 +91,6 @@ class View(object):
         if 'form.submitted' in request.params:
             username    = request.params['username']
             password    = request.params['password']
-            accountname = request.params['accountname']
             accountid   = request.params['accountid']
             nationid    = request.params['nationid']
 
@@ -89,26 +99,26 @@ class View(object):
 
             if costumer is None :
                 message = 'Wrong Nationid'
-                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid, accountname = accountname)
+                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid)
 
             if bankaccount is None :
                 message = 'Wrong accountid'
-                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid, accountname = accountname)
+                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid)
 
             if costumer.costumerid != bankaccount.Costumer_id :
                 message = 'You aren''t owner of this bankaccount '
-                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid, accountname = accountname)
+                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid)
 
             if DBSession.query(UserAccount).filter(UserAccount.username == username).first() is not None :
                 message = 'the username is already used '
-                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid, accountname = accountname)
+                return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid)
 
             DBSession.add(UserAccount(username = username, password = hash_password(password), role = 'viewer', Costumer_id = costumer.costumerid))
             account  = DBSession.query(UserAccount).filter(UserAccount.Costumer_id == costumer.costumerid).order_by(UserAccount.userid.desc()).first()
             DBSession.add(OwnerBankaccount(userid = account.userid, bankid = bankaccount.accountid))
             return HTTPFound(location = 'register/success?'+'getusername='+username)
 
-        return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid, accountname = accountname)
+        return dict(title = 'Register', username = username, message = message, url = request.application_url + '/register', nationid = nationid, accountid = accountid)
 
     @view_config(route_name='accountregister', renderer='templates/mainpage/regist-account.pt')
     def userregister(self):
@@ -162,7 +172,7 @@ class View(object):
                 DBSession.add(BankAccount(accountname = name, Costumer_id = thiscostumerid))
                 thisaccountid = DBSession.query(BankAccount).filter(BankAccount.accountname == name).filter(BankAccount.Costumer_id == thiscostumerid).order_by(BankAccount.accountid.desc()).first().accountid
                 thisaccountid = str(thisaccountid)
-                return HTTPFound( location = 'register?'+'getaccountname='+name+'&'+'getaccountid='+thisaccountid+'&getnationid='+nationid)
+                return HTTPFound( location = 'register?'+'getaccountid='+thisaccountid+'&getnationid='+nationid)
 
         return dict(title = 'Account Register',
                     name = name,
