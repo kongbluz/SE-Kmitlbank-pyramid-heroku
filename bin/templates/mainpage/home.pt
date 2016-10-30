@@ -90,7 +90,7 @@
       <!--login-page-->
       <div class="login-page">
         <div class="form" >
-              <form class="login-form" action="${request.route_url('list_news')}" method="post">
+              <form class="login-form" action="${request.route_url('list_news')}" method="post" tal:condition="role == 'editor'">
                 <button >Edit News</button>
               </form>
           <form class="login-form" action="${request.route_url('logout')}" method="post">

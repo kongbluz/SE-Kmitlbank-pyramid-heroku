@@ -32,6 +32,13 @@ class View(object):
         login = ''
         password = ''
         message = ''
+
+        checkrole = DBSession.query(UserAccount).filter(UserAccount.userid == self.logged_in).first()
+        if checkrole is not None:
+            role = checkrole.role
+        else:
+            role = 'viewer'
+
         if 'form.submitted' in request.params:
             login = request.params['login']
             password = request.params['password']
@@ -43,7 +50,7 @@ class View(object):
                 return HTTPFound( location = '/profile', headers = headers)
             else:
                 message = 'username or password is invalid'
-        return dict(title = 'Home', url = request.application_url + '/', login = login, password = password, message = message, allnews = allnews)
+        return dict(title = 'Home', url = request.application_url + '/', login = login, password = password, message = message, allnews = allnews, role = role)
 
     @view_config(route_name='contact', renderer='templates/mainpage/contact.pt')
     def contact(self):
