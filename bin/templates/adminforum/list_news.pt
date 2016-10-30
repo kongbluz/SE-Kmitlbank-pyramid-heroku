@@ -11,7 +11,12 @@
         <a href="${request.route_url('news_view', ifd=page.ifd)}">
               ${page.title}
         </a>
+        &nbsp&nbsp&nbsp&nbsp
+        <a href="${request.route_url('news_delete', ifd=page.ifd)}">
+              Delete
+        </a>
       </li>
     </ul>
+    <a href="${request.route_url('home')}"> Back to home </a>
   </body>
-</html>  
+</html>
