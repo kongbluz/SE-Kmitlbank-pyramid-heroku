@@ -1,13 +1,18 @@
 # KMITBANK
 
 ## how to run
+- Setting up
 ```
 $ cd <this directory>
 
 $ python setup.py develop
-
+```
+- Create Database
+```
 $ initialize_bin_db development.ini
-
+```
+- Serve on localhost
+```
 $ pserve development.ini
 ```
 - and let fun
