@@ -22,12 +22,15 @@ $ heroku create --stack cedar
 
 $ git push heroku master
 ```
-- Establish primary DB
+- Create Postgesql
 ```
 $ heroku addons:create heroku-postgresql:hobby-dev
-
+```
+- Establish primary DB
+```
 $ heroku pg:promote <HEROKU_POSTGRESQL_NAME>
 ```
 - Create Table
+```
 $ heroku run 'python -m bin.scripts.herokudb'
 ```
