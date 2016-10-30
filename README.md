@@ -35,7 +35,7 @@ $ heroku addons:create heroku-postgresql:hobby-dev
 ```
 $ heroku pg:promote <HEROKU_POSTGRESQL_NAME>
 ```
-$ Config variable in heroku
+- Config variable in heroku
 ```
 $ heroku config:add DATABASE_URL = <HEROKU_POSTGRESQL_URL>
 ```
