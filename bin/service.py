@@ -25,7 +25,6 @@ class service(object):
     def trade(self):
         request = self.request
         try:
-            username    = request.GET['user']
             accountfrom = request.GET['account']
             accountdes  = request.GET['accountdes']
             otp         = request.GET['otp']
@@ -36,15 +35,10 @@ class service(object):
                    }
         if accountfrom == accountdes :
             return { 'status' : False,
-                     'detail' : 'do not send to same username'
+                     'detail' : 'do not send to same account'
                    }
 
-        user = DBSession.query(UserAccount).filter(UserAccount.username == username).first()
-        if user is None :
-            return { 'status' : False,
-                     'detail' : 'do not have this username'
-                   }
-        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).filter(OwnerBankaccount.UserAccount_id == user.userid).first()
+        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).first()
         if owner is None :
             return { 'status' : False,
                      'detail' : 'wrong bank account'
@@ -191,3 +185,31 @@ class service(object):
                  'money' : transactions.money,
                  'balance' : transactions.balance,
                }
+
+    @view_config(route_name='checkbl', renderer='json')
+    def checkbl(self):
+        request = self.request
+        try:
+            account     = request.GET['account']
+            passcode    = request.GET['passcode']
+        except Exception as e:
+            return { 'status' : False,
+                     'detail' : 'do not have some attribute'
+                   }
+
+        ownbank = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == account).first()
+        if ownbank is None :
+            return { 'status' : False,
+                     'detail' : 'Wrong Bank account',
+                   }
+
+        if ownbank.passcodepp is not passcode :
+            return { 'status' : False,
+                     'detail' : 'Wrong passcode'
+                   }
+
+        bank  = DBSession.query(BankAccount).filter(BankAccount.accountid == acount).first()
+        return{ 'status' : True,
+                'detail' : 'Success to checkbl',
+                'balance' : bank.balance
+              }
