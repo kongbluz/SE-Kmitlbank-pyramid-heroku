@@ -203,7 +203,8 @@ class service(object):
                      'detail' : 'Wrong Bank account',
                    }
 
-        if ownbank.passcodepp is passcode :
+        print(ownbank.passcodepp, "=====" , passcode)
+        if ownbank.passcodepp != passcode :
             return { 'status' : False,
                      'detail' : 'Wrong passcode'
                    }
