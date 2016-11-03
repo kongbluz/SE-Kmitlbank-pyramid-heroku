@@ -203,12 +203,12 @@ class service(object):
                      'detail' : 'Wrong Bank account',
                    }
 
-        if ownbank.passcodepp is not passcode :
+        if ownbank.passcodepp is passcode :
             return { 'status' : False,
                      'detail' : 'Wrong passcode'
                    }
 
-        bank  = DBSession.query(BankAccount).filter(BankAccount.accountid == acount).first()
+        bank  = DBSession.query(BankAccount).filter(BankAccount.accountid == account).first()
         return{ 'status' : True,
                 'detail' : 'Success to checkbl',
                 'balance' : bank.balance
