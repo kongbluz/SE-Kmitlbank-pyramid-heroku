@@ -28,7 +28,7 @@ class View(object):
     @forbidden_view_config(renderer='templates/mainpage/home.pt')
     def home(self):
         request = self.request
-        allnews = DBSession.query(Forum).order_by(Forum.createdtime)
+        allnews = DBSession.query(Forum).order_by(Forum.createdtime.desc())
         login = ''
         password = ''
         message = ''
