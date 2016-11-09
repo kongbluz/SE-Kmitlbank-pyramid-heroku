@@ -24,7 +24,8 @@ def includeme(config):
     config.add_route('trade', '/service/trade')
     config.add_route('addpp','/service/prompay/add')
     config.add_route('tradepp', '/service/prompay/trade')
-    config.add_route('checkbl', 'service/prompay/checkbl')
+    config.add_route('checkbl', '/service/prompay/checkbl')
+    config.add_route('transfer_otbank', '/api/transfer')
 
     config.add_route('news_view', '/news/view/{ifd}', factory = RootFactory)
     config.add_route('news_add', '/news/add', factory = RootFactory)

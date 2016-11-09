@@ -18,6 +18,9 @@ from .scripts.genOTP import GETOTP
 import simplejson as json
 from .scripts.encrypt import decode_ba
 
+CONST_MRNONZ = "UX239I4NB1"
+CONST_CESE   = "746H32ABMN"
+
 class service(object):
     def __init__(self, request):
         self.request = request
@@ -214,3 +217,44 @@ class service(object):
                 'detail' : 'Success to checkbl',
                 'balance' : bank.balance
               }
+
+    @view_config(route_name='transfer_otbank', renderer='json', request_method='POST')
+    def transfer_otbank(self):
+        try:
+            jsonbody = self.request.json_body
+        except Exception:
+            return { "status" : False,
+                     "error_message" : "Wrong Protocal"
+                   }
+        try:
+            accountid   = jsonbody["from_Account"]
+            accounttoid = jsonbody["to_Account"]
+            money    = jsonbody["Amount"]
+            bankname = jsonbody["from_Bank"]
+            bankdesname = jsonbody["to_Bank"]
+            code     = jsonbody["key"]
+        except Exception:
+            return { "status" : False,
+                     "error_message" : "Wrong attribute"
+                   }
+        if code == CONST_MRNONZ :
+            bankname = "(MrNONZ Bank)"
+        elif code == CONST_CESE :
+            bankname = "(CESE Bank)"
+        else :
+            return { "status" : False,
+                     "error_message" : "Wrong code"
+                   }
+
+        bankaccountto = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accounttoid)).first()
+        if bankaccountto is None:
+            return { "status" : False,
+                     "error_message" : "Wrong To_Bankaccount"
+                   }
+
+        bankaccountto.balance += money
+        DBSession.add(Transaction(BankAccount_id = bankaccountto.accountid, datetime = datetime.datetime.now(),
+                                  types = 'Receive', money = money, balance = bankaccountto.balance, detail = 'from '+accountid+' '+bankname))
+        return { "status" : True,
+                 "error_message" : "Success jaaaaa"
+               }
