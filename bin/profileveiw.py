@@ -108,13 +108,17 @@ class ProfileVeiw(object):
                 message = 'Please select KMITL Bank'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
+            if otheraccount is '' :
+                message = 'Wrong BankAccount'
+                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
+
             otherbankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(otheraccount)).first()
 
             if otherbankaccount is None :
                 message = 'Wrong BankAccount'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-            if otherbankaccount.accountid == int(accountid) :
+            if otherbankaccount.accountid == decode_ba(accountid) :
                 message = 'can''t transfer to own accountid '
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
