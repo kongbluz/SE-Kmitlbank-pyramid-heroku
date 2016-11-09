@@ -17,6 +17,7 @@ from pyramid.view import (
 import datetime
 from .scripts.genOTP import GETOTP
 from dateutil.relativedelta import relativedelta
+from .scripts.encrypt import encode_ba, decode_ba
 
 class ProfileVeiw(object):
     def __init__(self, request):
@@ -29,7 +30,10 @@ class ProfileVeiw(object):
     @view_config(route_name='profile',permission = 'viewprofile', renderer='templates/profile/online.pt')
     def profile(self):
         request = self.request
-        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccountid = []
+        for thisaccount in allaccount :
+            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
         accountid = 0
         costumer = DBSession.query(Costumer).filter(Costumer.costumerid == UserAccount.by_id(self.logged_in).Costumer_id).first()
         name     = costumer.fullname
@@ -40,7 +44,7 @@ class ProfileVeiw(object):
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
         if accountid is not 0:
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
 
             if bank is not None:
                 accountname = bank.accountname
@@ -50,22 +54,23 @@ class ProfileVeiw(object):
             accountid = 0
 
         try:
-            otppassword = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == int(accountid)).first().otppassword
+            otppassword = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(accountid)).first().otppassword
         except Exception:
             otppassword = None
 
         if 'OTP.submitted' in request.params :
             accountid   = request.params['hiddenaccountid']
-            ownaccount  = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == int(accountid)).first()
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            ownaccount  = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(accountid)).first()
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
             accountname = bank.accountname
             balance  = bank.balance
             loan     = bank.loan
             ownaccount.otppassword = GETOTP()
             otppassword = ownaccount.otppassword
 
-        if accountid is '0' or 0 :
+        if int(accountid) is 0 :
             accountid = ''
+
         return dict(title = 'Profile', name = name, accountname = accountname, otppassword = otppassword,
                     balance = balance, loan = loan, allaccountid = allaccountid, accountid = accountid,
                     url = request.application_url + '/profile'
@@ -74,14 +79,17 @@ class ProfileVeiw(object):
     @view_config(route_name='transfer',permission = 'viewprofile', renderer='templates/profile/transfer.pt')
     def tranfer(self):
         request = self.request
-        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccountid = []
+        for thisaccount in allaccount :
+            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
         accountid = ''
         balance  = ''
         message  = ''
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
         if accountid is not '':
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
             if bank is not None:
                 balance     = bank.balance
         else:
@@ -100,7 +108,7 @@ class ProfileVeiw(object):
                 message = 'Please select KMITL Bank'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-            otherbankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == otheraccount).first()
+            otherbankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(otheraccount)).first()
 
             if otherbankaccount is None :
                 message = 'Wrong BankAccount'
@@ -120,7 +128,7 @@ class ProfileVeiw(object):
                 message = 'You don''t have negative money'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
             if bank.balance - money < 0 :
                 message = 'You don''t have money enough'
                 return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
@@ -140,19 +148,25 @@ class ProfileVeiw(object):
 
     @view_config(route_name='loan', renderer='templates/profile/loan.pt')
     def loan(self):
-        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccountid = []
+        for thisaccount in allaccount :
+            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
         return dict(title = 'Loan', allaccountid = allaccountid)
 
     @view_config(route_name='transaction',permission = 'viewprofile', renderer='templates/profile/transaction.pt')
     def transaction(self):
         request = self.request
-        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccountid = []
+        for thisaccount in allaccount :
+            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
         alltransaction = None
         accountid = None
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
-        if accountid is not '':
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+        if accountid is not None:
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
             if bank is not None:
                 alltransaction = DBSession.query(Transaction).filter(Transaction.BankAccount_id == bank.accountid).order_by(Transaction.datetime.desc())
         else:
@@ -163,19 +177,23 @@ class ProfileVeiw(object):
     @view_config(route_name='autopay',permission = 'viewprofile', renderer='templates/profile/autopay.pt')
     def autopay(self):
         request = self.request
-        allaccountid = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
+        allaccountid = []
+        for thisaccount in allaccount :
+            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
         allrepeat = None
         message = None
         balance = None
         accountid = None
         if 'form.submitted' in request.params :
             accountid    = request.params['selector']
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
             balance     = bank.balance
-            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == decode_ba(accountid)).order_by(RepeatPayment.nexttime)
 
         if 'autopay.submitted' in request.params :
             accountid   = request.params['hiddenaccountid']
+            balance   = request.params['hiddenbalance']
             money       = request.params['pmoney']
             year        = request.params['pyear']
             month       = request.params['pmonth']
@@ -199,7 +217,7 @@ class ProfileVeiw(object):
             except Exception:
                 message = "It not Money"
                 return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)
-            bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == int(bankto)).first()
+            bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(bankto)).first()
 
             if bankto is None :
                 message = "Wrong Bank Account"
@@ -208,22 +226,22 @@ class ProfileVeiw(object):
                 message = "Can not transfer to own BankAccount"
                 return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)
 
-            accountid = int(accountid)
             repeattime = datetime.datetime.now()
             repeattime += relativedelta(days=+ day, months=+ month, years=+ year)
-            DBSession.add(RepeatPayment(myaccount = accountid,
-                                        accountdes = bankto.accountid,
+            DBSession.add(RepeatPayment(myaccount =  decode_ba(accountid),
+                                        accountdes = encode_ba(bankto.accountid),
                                         money = money,
                                         nextyear = year, nextmonth = month,
                                         nextday = day,
                                         nexttime = repeattime))
-            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == decode_ba(accountid)).order_by(RepeatPayment.nexttime)
 
         if 'delete.submitted' in request.params :
             repayid = request.params['repayid']
             accountid = request.params['hiddenaccountid']
+            balance   = request.params['hiddenbalance']
             deltarget = DBSession.query(RepeatPayment).filter(RepeatPayment.repayid == repayid).one()
             DBSession.delete(deltarget)
-            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == accountid).order_by(RepeatPayment.nexttime)
+            allrepeat = DBSession.query(RepeatPayment).filter(RepeatPayment.myaccount == decode_ba(accountid)).order_by(RepeatPayment.nexttime)
 
         return dict(title = 'Auto Pay', allaccountid = allaccountid, message = message, balance = balance, accountid = accountid, allrepeat = allrepeat)

@@ -38,7 +38,7 @@
                                     <form method="post">
                                       <select name = "selector">
                                          <option  value = "0">please select account bank</option>
-                                         <option tal:repeat="thisaccountid allaccountid" value="${thisaccountid.BankAccount_id}"> ${thisaccountid.BankAccount_id} </option>
+                                         <option tal:repeat="thisaccountid allaccountid" value="${thisaccountid}"> ${thisaccountid} </option>
                                       </select>
                                       <input type="submit" name="form.submitted" value="submit"/>
                                     </form>

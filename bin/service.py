@@ -16,6 +16,7 @@ from pyramid.view import (
 import datetime
 from .scripts.genOTP import GETOTP
 import simplejson as json
+from .scripts.encrypt import decode_ba
 
 class service(object):
     def __init__(self, request):
@@ -38,13 +39,13 @@ class service(object):
                      'detail' : 'do not send to same account'
                    }
 
-        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).first()
+        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(accountfrom)).first()
         if owner is None :
             return { 'status' : False,
                      'detail' : 'wrong bank account'
                    }
 
-        bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == accountdes).first()
+        bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountdes)).first()
         if bankto is None :
             return { 'status' : False,
                      'detail' : 'wrong destination account'
@@ -92,7 +93,7 @@ class service(object):
             return { 'status' : False,
                      'detail' : 'do not have some attribute'
                    }
-        myaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == account).first()
+        myaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(account)).first()
         if myaccount is None:
             return { 'status' : False,
                      'detail' : 'wrong Bank Account'
@@ -101,7 +102,7 @@ class service(object):
         if myaccount.otppassword == otppassword :
             myaccount.passcodepp = GETOTP() + GETOTP()
             myaccount.otppassword = None
-            bank      = DBSession.query(BankAccount).filter(BankAccount.accountid == account).first()
+            bank      = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(account)).first()
             costumer  = DBSession.query(Costumer).filter(Costumer.costumerid == bank.Costumer_id).first()
             return { 'status' : True,
                      'detail' : 'Success to add prompay',
@@ -136,13 +137,13 @@ class service(object):
                      'detail' : 'do not send to same username'
                    }
 
-        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == accountfrom).first()
+        owner = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(accountfrom)).first()
         if owner is None :
             return { 'status' : False,
                      'detail' : 'wrong bank account'
                    }
 
-        bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == accountdes).first()
+        bankto = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountdes)).first()
         if bankto is None :
             return { 'status' : False,
                      'detail' : 'wrong destination account'
@@ -197,19 +198,18 @@ class service(object):
                      'detail' : 'do not have some attribute'
                    }
 
-        ownbank = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == account).first()
+        ownbank = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.BankAccount_id == decode_ba(account)).first()
         if ownbank is None :
             return { 'status' : False,
                      'detail' : 'Wrong Bank account',
                    }
 
-        print(ownbank.passcodepp, "=====" , passcode)
         if ownbank.passcodepp != passcode :
             return { 'status' : False,
                      'detail' : 'Wrong passcode'
                    }
 
-        bank  = DBSession.query(BankAccount).filter(BankAccount.accountid == account).first()
+        bank  = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(account)).first()
         return{ 'status' : True,
                 'detail' : 'Success to checkbl',
                 'balance' : bank.balance

@@ -20,6 +20,8 @@
 
                                     <input type="hidden" name="hiddenaccountid"
                                            value="${accountid}"/>
+                                    <input type="hidden" name="hiddenbalance"
+                                                  value="${balance}"/>
                                   <li>
                                        Account Number :
                                        <input type="text" name="transferaccount" placeholder="please Enter Acc.Number">
@@ -81,6 +83,8 @@
                                  <th><form method="post">
                                       <input type="hidden" name="repayid"
                                              value="${thisrepeat.repayid}"/>
+                                      <input type="hidden" name="hiddenbalance"
+                                                    value="${balance}"/>
                                       <input type="hidden" name="hiddenaccountid"
                                                     value="${accountid}"/>
                                       <input type="submit" name="delete.submitted"
