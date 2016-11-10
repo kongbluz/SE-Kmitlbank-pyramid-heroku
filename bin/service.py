@@ -230,8 +230,6 @@ class service(object):
             accountid   = jsonbody["from_Account"]
             accounttoid = jsonbody["to_Account"]
             money    = jsonbody["Amount"]
-            bankname = jsonbody["from_Bank"]
-            bankdesname = jsonbody["to_Bank"]
             code     = jsonbody["key"]
         except Exception:
             return { 'status' : False,

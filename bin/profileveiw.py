@@ -141,7 +141,7 @@ class ProfileVeiw(object):
                     message = 'itn''t money'
                     return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-                response = transferotbank(bank = selectbank, from_Account = accountid, to_Account = otheraccount, Amount = money, from_Bank = "KMITL_Bank", to_Bank = "Test")
+                response = transferotbank(bank = selectbank, from_Account = accountid, to_Account = otheraccount, Amount = money)
                 if response['status'] is False:
                     message = response['error_message']
                 else :
@@ -149,7 +149,7 @@ class ProfileVeiw(object):
                         namebank = '(MrNONZ Bank)'
                     elif selectbank is '3' :
                         namebank = '(CESE Bank)'
-                        
+
                     bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
                     bank.balance -= money
                     DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),

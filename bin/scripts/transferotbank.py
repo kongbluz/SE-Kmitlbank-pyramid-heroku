@@ -4,7 +4,7 @@ import simplejson as json
 CONST_MRNONZ = "UX239I4NB1"
 CONST_CESE   = "746H32ABMN"
 
-def transferotbank(bank, from_Account, to_Account, Amount, from_Bank, to_Bank):
+def transferotbank(bank, from_Account, to_Account, Amount):
 
     if bank is '2':
         key = "CONST_MRNONZ"
@@ -17,8 +17,6 @@ def transferotbank(bank, from_Account, to_Account, Amount, from_Bank, to_Bank):
     puredata['from_Account'] = from_Account
     puredata['to_Account'] = to_Account
     puredata['Amount'] = Amount
-    puredata['from_Bank'] = from_Bank
-    puredata['to_Bank'] = to_Bank
     puredata['key'] = key
     json_data = json.dumps(puredata)
 
