@@ -1,13 +1,13 @@
 import requests
 import simplejson as json
 
-CONST_MRNONZ = "UX239I4NB1"
-CONST_CESE   = "746H32ABMN"
+CONST_MRNONZ = "kong2222"
+CONST_CESE   = "4R02vZ4c69"
 
 def transferotbank(bank, from_Account, to_Account, Amount):
 
     if bank is '2':
-        key = "CONST_MRNONZ"
+        key = CONST_MRNONZ
         url = "http://bank.mrnonz.com/api/transfer"
     elif bank is '3':
         key = "CONST_CESE"

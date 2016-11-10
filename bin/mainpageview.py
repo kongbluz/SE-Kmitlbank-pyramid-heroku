@@ -16,6 +16,7 @@ from pyramid.view import (
 
 import datetime
 from .scripts.encrypt import check_password, hash_password
+from .scripts.encrypt import encode_ba, decode_ba
 
 class View(object):
     def __init__(self, request):
@@ -101,8 +102,9 @@ class View(object):
             accountid   = request.params['accountid']
             nationid    = request.params['nationid']
 
+
             costumer = DBSession.query(Costumer).filter(Costumer.nationid == nationid).first()
-            bankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == accountid).first()
+            bankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
 
             if costumer is None :
                 message = 'Wrong Nationid'
@@ -178,8 +180,7 @@ class View(object):
                     thiscostumerid = thiscostumerid.costumerid
                 DBSession.add(BankAccount(accountname = name, Costumer_id = thiscostumerid))
                 thisaccountid = DBSession.query(BankAccount).filter(BankAccount.accountname == name).filter(BankAccount.Costumer_id == thiscostumerid).order_by(BankAccount.accountid.desc()).first().accountid
-                thisaccountid = str(thisaccountid)
-                return HTTPFound( location = 'register?'+'getaccountid='+thisaccountid+'&getnationid='+nationid)
+                return HTTPFound( location = 'register?'+'getaccountid='+encode_ba(thisaccountid)+'&getnationid='+nationid)
 
         return dict(title = 'Account Register',
                     name = name,
