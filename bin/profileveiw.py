@@ -34,7 +34,7 @@ class ProfileVeiw(object):
         allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         allaccountid = []
         for thisaccount in allaccount :
-            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
+            allaccountid.append(encode_ba(thisaccount.BankAccount_id))
         accountid = 0
         costumer = DBSession.query(Costumer).filter(Costumer.costumerid == UserAccount.by_id(self.logged_in).Costumer_id).first()
         name     = costumer.fullname
@@ -83,7 +83,7 @@ class ProfileVeiw(object):
         allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         allaccountid = []
         for thisaccount in allaccount :
-            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
+            allaccountid.append(encode_ba(thisaccount.BankAccount_id))
         accountid = ''
         balance  = ''
         message  = ''
@@ -163,7 +163,7 @@ class ProfileVeiw(object):
         allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         allaccountid = []
         for thisaccount in allaccount :
-            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
+            allaccountid.append(encode_ba(thisaccount.BankAccount_id))
         return dict(title = 'Loan', allaccountid = allaccountid)
 
     @view_config(route_name='transaction',permission = 'viewprofile', renderer='templates/profile/transaction.pt')
@@ -172,7 +172,7 @@ class ProfileVeiw(object):
         allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         allaccountid = []
         for thisaccount in allaccount :
-            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
+            allaccountid.append(encode_ba(thisaccount.BankAccount_id))
         alltransaction = None
         accountid = None
         if 'form.submitted' in request.params :
@@ -192,8 +192,9 @@ class ProfileVeiw(object):
         allaccount = DBSession.query(OwnerBankaccount).filter(OwnerBankaccount.UserAccount_id == UserAccount.by_id(self.logged_in).userid).order_by(OwnerBankaccount.BankAccount_id)
         allaccountid = []
         for thisaccount in allaccount :
-            allaccountid.append(str(encode_ba(thisaccount.BankAccount_id)))
+            allaccountid.append(encode_ba(thisaccount.BankAccount_id))
         allrepeat = None
+        allaccountdes = None
         message = None
         balance = None
         accountid = None
@@ -241,7 +242,7 @@ class ProfileVeiw(object):
             repeattime = datetime.datetime.now()
             repeattime += relativedelta(days=+ day, months=+ month, years=+ year)
             DBSession.add(RepeatPayment(myaccount =  decode_ba(accountid),
-                                        accountdes = encode_ba(bankto.accountid),
+                                        accountdes = bankto.accountid,
                                         money = money,
                                         nextyear = year, nextmonth = month,
                                         nextday = day,
