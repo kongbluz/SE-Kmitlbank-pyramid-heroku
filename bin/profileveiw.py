@@ -18,6 +18,7 @@ import datetime
 from .scripts.genOTP import GETOTP
 from dateutil.relativedelta import relativedelta
 from .scripts.encrypt import encode_ba, decode_ba
+from .scripts.transferotbank import transferotbank
 
 class ProfileVeiw(object):
     def __init__(self, request):
@@ -101,52 +102,59 @@ class ProfileVeiw(object):
             money        = request.params['money']
             accountid    = request.params['myaccount']
             balance      = request.params['mybalance']
+
             if accountid is '' :
                 message = 'Please select bank account'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-            if selectbank != 'KMITLbank' :
-                message = 'Please select KMITL Bank'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-
-            if otheraccount is '' :
-                message = 'Wrong BankAccount'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-
-            otherbankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(otheraccount)).first()
-
-            if otherbankaccount is None :
-                message = 'Wrong BankAccount'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-
-            if otherbankaccount.accountid == decode_ba(accountid) :
+            elif selectbank is '0' :
+                message = 'Please select  Bank'
+            elif otheraccount is '' :
+                message = 'Please select To_BankAccount'
+            elif otheraccount == accountid :
                 message = 'can''t transfer to own accountid '
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
+            elif selectbank is '1' :
+                bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
+                otherbankaccount = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(otheraccount)).first()
+                try:
+                    money =  float(money)
+                except Exception:
+                    message = 'itn''t money'
+                    return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
+                if otherbankaccount is None :
+                    message = 'Wrong To_BankAccount'
+                elif money <= 0 :
+                    message = 'You don''t have negative money'
+                elif bank.balance - money < 0 :
+                    message = 'You don''t have money enough'
+                else :
+                    bank.balance -= money
+                    DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
+                                              types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otherbankaccount.accountname))
 
-            try:
-                money =  float(money)
-            except Exception as e:
-                message = 'itn''t money'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
+                    otherbankaccount.balance += money
+                    DBSession.add(Transaction(BankAccount_id = otherbankaccount.accountid, datetime = datetime.datetime.now(),
+                                              types = 'Receive', money = money, balance = otherbankaccount.balance, detail = 'from '+bank.accountname))
+                    message = 'Successfully transfer'
+            elif selectbank is not '0' or '1' :
+                try:
+                    money =  float(money)
+                except Exception:
+                    message = 'itn''t money'
+                    return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
-            if money <= 0 :
-                message = 'You don''t have negative money'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-
-            bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
-            if bank.balance - money < 0 :
-                message = 'You don''t have money enough'
-                return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
-
-            bank.balance -= money
-            DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
-                                      types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otherbankaccount.accountname))
-
-            otherbankaccount.balance += money
-            DBSession.add(Transaction(BankAccount_id = otherbankaccount.accountid, datetime = datetime.datetime.now(),
-                                      types = 'Receive', money = money, balance = otherbankaccount.balance, detail = 'from '+bank.accountname))
-
-            message = 'Successfully transfer'
-            return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = bank.balance)
+                response = transferotbank(bank = selectbank, from_Account = accountid, to_Account = otheraccount, Amount = money, from_Bank = "KMITL_Bank", to_Bank = "Test")
+                if response['status'] is False:
+                    message = response['error_message']
+                else :
+                    if selectbank is '2' :
+                        namebank = '(MrNONZ Bank)'
+                    elif selectbank is '3' :
+                        namebank = '(CESE Bank)'
+                        
+                    bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
+                    bank.balance -= money
+                    DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
+                                              types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otheraccount+namebank))
+                    message = 'Successfully transfer'
 
         return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 

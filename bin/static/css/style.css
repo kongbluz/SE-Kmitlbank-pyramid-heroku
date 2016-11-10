@@ -133,3 +133,13 @@ footer .nav li a { color:#fff; padding:0 20px 0 30px;}
 
 footer .fleft { padding:0 0 0 44px; float:left;}
 footer .fright { padding:0 44px 0 0; float:right;}
+
+/*media screen*/
+@media screen and (max-width:360px) {
+  #container, footer {width:100%;}
+  html, body {width: 960px;}
+}
+@media screen and (max-width:480px) {
+  #container, footer {width:100%;}
+  html, body {width: 960px;}
+}

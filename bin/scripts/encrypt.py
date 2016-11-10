@@ -9,9 +9,15 @@ def check_password(pw, hashed_pw):
     return bcrypt.checkpw(pw.encode('utf8'), expected_hash)
 
 def encode_ba(accountid):
-    temp = accountid + 5495100000
+    try:
+        temp = accountid + 5495100000
+    except Exception as e:
+        return None
     return str(temp)
 
 def decode_ba(accountid):
-    temp = int(accountid) - 5495100000
+    try:
+        temp = int(accountid) - 5495100000
+    except Exception:
+        return None
     return temp

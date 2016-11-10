@@ -15,6 +15,7 @@ requires = [
     'psycopg2',
     'simplejson',
     'python-dateutil',
+    'requests',
 ]
 
 setup(name = 'bin',
