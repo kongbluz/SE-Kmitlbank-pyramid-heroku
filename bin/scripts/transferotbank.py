@@ -8,10 +8,10 @@ def transferotbank(bank, from_Account, to_Account, Amount):
 
     if bank is '2':
         key = CONST_MRNONZ
-        url = "http://bank.mrnonz.com/api/transfer"
+        url = "http://bank.route.in.th:9999/api/transfer"
     elif bank is '3':
-        key = "CONST_CESE"
-        url = 'http://glacial-gorge-51031.herokuapp.com/api/transfer'
+        key = CONST_CESE
+        url = 'http://161.246.70.75:8080/cesebank/api/Transferapi.php'
 
     puredata = {}
     puredata['from_Account'] = from_Account
