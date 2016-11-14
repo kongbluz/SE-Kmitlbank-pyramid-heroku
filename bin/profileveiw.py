@@ -147,7 +147,7 @@ class ProfileVeiw(object):
                     message = response['error_message']
                 else :
                     if selectbank is '2' :
-                        namebank = '(MrNONZ Bank)'
+                        namebank = '(The Real Bank)'
                     elif selectbank is '3' :
                         namebank = '(CESE Bank)'
 

@@ -26,7 +26,7 @@
                                     <select name="selectbank" >
                                        <option value="0">please select bank</option>
                                        <option value="1">KMITL Bank</option>
-                                       <option value="2">MRNONZ Bank</option>
+                                       <option value="2">The Real Bank</option>
                                        <option value="3">CESE  Bank</option>
                                     </select>
                                   </li>
