@@ -21,7 +21,8 @@ def transferotbank(bank, from_Account, to_Account, Amount):
     json_data = json.dumps(puredata)
 
     try:
-        r = requests.post(url, json_data)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        r = requests.post(url, data=json_data, headers=headers)
         response =  r.json()
     except Exception:
         response = {'status': False, 'error_message': 'Fail to connect server'}
