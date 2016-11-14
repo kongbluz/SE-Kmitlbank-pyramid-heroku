@@ -151,7 +151,9 @@ class ProfileVeiw(object):
                             namebank = '(The Real Bank)'
                         elif selectbank is '3' :
                             namebank = '(CESE Bank)'
-
+                        if money <= 0 :
+                            message = 'You don''t have negative money'
+                            return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
                         bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
                         bank.balance -= money
                         DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
@@ -166,7 +168,9 @@ class ProfileVeiw(object):
                             namebank = '(The Real Bank)'
                         elif selectbank is '3' :
                             namebank = '(CESE Bank)'
-
+                        if money <= 0 :
+                            message = 'You don''t have negative money'
+                            return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
                         bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
                         bank.balance -= money
                         DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
