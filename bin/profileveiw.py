@@ -134,6 +134,7 @@ class ProfileVeiw(object):
                     DBSession.add(Transaction(BankAccount_id = otherbankaccount.accountid, datetime = datetime.datetime.now(),
                                               types = 'Receive', money = money, balance = otherbankaccount.balance, detail = 'from '+bank.accountname))
                     message = 'Successfully transfer'
+                    balance = bank.balance
             elif selectbank is not '0' or '1' :
                 try:
                     money =  float(money)
@@ -155,6 +156,7 @@ class ProfileVeiw(object):
                     DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
                                               types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otheraccount+namebank))
                     message = 'Successfully transfer'
+                    balance = bank.balance
 
         return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
