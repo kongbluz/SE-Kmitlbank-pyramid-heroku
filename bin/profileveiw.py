@@ -143,20 +143,36 @@ class ProfileVeiw(object):
                     return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
                 response = transferotbank(bank = selectbank, from_Account = accountid, to_Account = otheraccount, Amount = money)
-                if response['status'] is False:
-                    message = response['error_message']
-                else :
-                    if selectbank is '2' :
-                        namebank = '(The Real Bank)'
-                    elif selectbank is '3' :
-                        namebank = '(CESE Bank)'
+                try :
+                    if response['status'] is False:
+                        message = response['error_message']
+                    else :
+                        if selectbank is '2' :
+                            namebank = '(The Real Bank)'
+                        elif selectbank is '3' :
+                            namebank = '(CESE Bank)'
 
-                    bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
-                    bank.balance -= money
-                    DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
-                                              types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otheraccount+namebank))
-                    message = 'Successfully transfer'
-                    balance = bank.balance
+                        bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
+                        bank.balance -= money
+                        DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
+                                            types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otheraccount+namebank))
+                        message = 'Successfully transfer'
+                        balance = bank.balance
+                except Exception:
+                    if response['success'] is False:
+                        message = response['error_message']
+                    else :
+                        if selectbank is '2' :
+                            namebank = '(The Real Bank)'
+                        elif selectbank is '3' :
+                            namebank = '(CESE Bank)'
+
+                        bank        = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accountid)).first()
+                        bank.balance -= money
+                        DBSession.add(Transaction(BankAccount_id = bank.accountid, datetime = datetime.datetime.now(),
+                                            types = 'Transfer', money = money, balance = bank.balance, detail = 'to '+otheraccount+namebank))
+                        message = 'Successfully transfer'
+                        balance = bank.balance
 
         return dict(title = 'Transfer', message = message, allaccountid = allaccountid, accountid = accountid, balance = balance)
 
