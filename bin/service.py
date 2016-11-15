@@ -223,7 +223,7 @@ class service(object):
         try:
             jsonbody = self.request.json_body
         except Exception:
-            return { 'status' : False,
+            return { 'success' : False,
                      'error_message' : 'Wrong Protocal'
                    }
         try:
@@ -232,7 +232,7 @@ class service(object):
             money    = jsonbody["Amount"]
             code     = jsonbody["key"]
         except Exception:
-            return { 'status' : False,
+            return { 'success' : False,
                      'error_message' : 'Wrong attribute'
                    }
         if code == CONST_MRNONZ :
@@ -240,19 +240,19 @@ class service(object):
         elif code == CONST_CESE :
             bankname = "(CESE Bank)"
         else :
-            return { 'status' : False,
+            return { 'success' : False,
                      'error_message' : 'Wrong code'
                    }
 
         bankaccountto = DBSession.query(BankAccount).filter(BankAccount.accountid == decode_ba(accounttoid)).first()
         if bankaccountto is None:
-            return { 'status' : False,
+            return { 'success' : False,
                      'error_message' : 'Wrong To_Bankaccount'
                    }
 
         bankaccountto.balance += money
         DBSession.add(Transaction(BankAccount_id = bankaccountto.accountid, datetime = datetime.datetime.now(),
                                   types = 'Receive', money = money, balance = bankaccountto.balance, detail = 'from '+accountid+' '+bankname))
-        return { 'status' : True,
+        return { 'success' : True,
                  'error_message' : 'Success jaaaaa'
                }
