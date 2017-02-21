@@ -1,4 +1,4 @@
-# KMITBANK
+# KMIT-BANK
 
 ## how to run
 - Setting up
